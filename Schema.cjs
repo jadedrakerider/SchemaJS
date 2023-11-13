@@ -4,7 +4,7 @@
  * GitHub: https://github.com/GeorgeSchafer/SchemaJS
  */
 
-export default class Schema {
+module.exports = class Schema {
 
     static types = [
         { OBJECT: {"type": "object"} },
