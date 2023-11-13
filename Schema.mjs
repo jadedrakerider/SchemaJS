@@ -7,10 +7,10 @@
 export default class Schema {
 
     static types = [
-        { OBJECT: {"type": "object"} },
-        { ARRAY: {"type": "array"} },
-        { NUMBER: {"type": "number"} },
-        { STRING: {"type": "string"} },
+        { OBJECT: {'type': 'object'} },
+        { ARRAY: {'type': 'array'} },
+        { NUMBER: {'type': 'number'} },
+        { STRING: {'type': 'string'} },
         { BOOLEAN: { 'type': 'boolean'} }
     ];
     static object = new Enum(types).select('OBJECT');
@@ -20,13 +20,9 @@ export default class Schema {
     static boolean = new Enum(types).select('BOOLEAN')
 
     constructor() {
-        this.type = object;
-        this.require = [
-            'id'
-        ];
-        this.properties = {
-            id: number
-        };
+        this.type = this.object;
+        this.require = [];
+        this.properties = {};
     }
 
     add(str, typeObj){

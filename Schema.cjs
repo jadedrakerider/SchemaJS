@@ -7,10 +7,10 @@
 module.exports = class Schema {
 
     static types = [
-        { OBJECT: {"type": "object"} },
-        { ARRAY: {"type": "array"} },
-        { NUMBER: {"type": "number"} },
-        { STRING: {"type": "string"} },
+        { OBJECT: {'type': 'object'} },
+        { ARRAY: {'type': 'array'} },
+        { NUMBER: {'type': 'number'} },
+        { STRING: {'type': 'string'} },
         { BOOLEAN: { 'type': 'boolean'} }
     ];
     static object = new Enum(types).select('OBJECT');
@@ -21,12 +21,8 @@ module.exports = class Schema {
 
     constructor() {
         this.type = object;
-        this.require = [
-            'id'
-        ];
-        this.properties = {
-            id: number
-        };
+        this.require = [];
+        this.properties = {};
     }
 
     add(str, typeObj){
