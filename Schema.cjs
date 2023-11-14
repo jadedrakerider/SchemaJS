@@ -4,6 +4,8 @@
  * GitHub: https://github.com/GeorgeSchafer/SchemaJS
  */
 
+const ExtEnum = require('./ENUMJS/ExtEnum.cjs')
+
 module.exports = class Schema {
 
     static types = [
@@ -15,13 +17,13 @@ module.exports = class Schema {
         { OBJECT: {'type': 'object'} },
         { STRING: {'type': 'string'} }
     ];
-    static array = new Enum(types).select('ARRAY');
-    static boolean = new Enum(types).select('BOOLEAN');
-    static integer = new Enum(types).select('INTEGER');
-    static number = new Enum(types).select('NUMBER');
-    static null = new Enum(types).select('NULL');
-    static object = new Enum(types).select('OBJECT');
-    static string = new Enum(types).select('STRING');
+    static array = new ExtEnum(types).select('ARRAY');
+    static boolean = new ExtEnum(types).select('BOOLEAN');
+    static integer = new ExtEnum(types).select('INTEGER');
+    static number = new ExtEnum(types).select('NUMBER');
+    static null = new ExtEnum(types).select('NULL');
+    static object = new ExtEnum(types).select('OBJECT');
+    static string = new ExtEnum(types).select('STRING');
 
     constructor() {
         this.type = this.object;
