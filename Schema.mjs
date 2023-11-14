@@ -7,17 +7,21 @@
 export default class Schema {
 
     static types = [
-        { OBJECT: {'type': 'object'} },
         { ARRAY: {'type': 'array'} },
+        { BOOLEAN: {'type': 'boolean'} },
+        { INTEGER: {'type': 'integer'}},
         { NUMBER: {'type': 'number'} },
-        { STRING: {'type': 'string'} },
-        { BOOLEAN: { 'type': 'boolean'} }
+        { NULL: {'type': 'null'}},
+        { OBJECT: {'type': 'object'} },
+        { STRING: {'type': 'string'} }
     ];
-    static object = new Enum(types).select('OBJECT');
     static array = new Enum(types).select('ARRAY');
-    static number = new Enum(types).select('NUMBER')
-    static string = new Enum(types).select('STRING')
-    static boolean = new Enum(types).select('BOOLEAN')
+    static boolean = new Enum(types).select('BOOLEAN');
+    static integer = new Enum(types).select('INTEGER');
+    static number = new Enum(types).select('NUMBER');
+    static null = new Enum(types).select('NULL');
+    static object = new Enum(types).select('OBJECT');
+    static string = new Enum(types).select('STRING');
 
     constructor() {
         this.type = this.object;
