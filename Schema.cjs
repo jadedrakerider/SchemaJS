@@ -17,13 +17,13 @@ module.exports = class Schema {
         { OBJECT: {'type': 'object'} },
         { STRING: {'type': 'string'} }
     ];
-    static array = new ExtEnum(types).select('ARRAY');
-    static boolean = new ExtEnum(types).select('BOOLEAN');
-    static integer = new ExtEnum(types).select('INTEGER');
-    static number = new ExtEnum(types).select('NUMBER');
-    static null = new ExtEnum(types).select('NULL');
-    static object = new ExtEnum(types).select('OBJECT');
-    static string = new ExtEnum(types).select('STRING');
+    static array = new ExtEnum(Schema.types).select('ARRAY');
+    static boolean = new ExtEnum(Schema.types).select('BOOLEAN');
+    static integer = new ExtEnum(Schema.types).select('INTEGER');
+    static number = new ExtEnum(Schema.types).select('NUMBER');
+    static nul = new ExtEnum(Schema.types).select('NULL');
+    static object = new ExtEnum(Schema.types).select('OBJECT');
+    static string = new ExtEnum(Schema.types).select('STRING');
 
     constructor() {
         this.type = this.object;
@@ -33,7 +33,7 @@ module.exports = class Schema {
 
     add(str, typeObj){
         this.require.push(str);
-        this.properites[str] = typeObj;
+        this.properties[str] = typeObj;
     }
  
 }

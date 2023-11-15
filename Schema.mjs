@@ -6,34 +6,34 @@
 
 import ExtEnum from './ENUMJS/ExtEnum.mjs'
 
-export default class Schema {
+const types = [
+    { ARRAY: {'type': 'array'} },
+    { BOOLEAN: {'type': 'boolean'} },
+    { INTEGER: {'type': 'integer'} },
+    { NUMBER: {'type': 'number'} },
+    { NULL: {'type': 'null'} },
+    { OBJECT: {'type': 'object'} },
+    { STRING: {'type': 'string'} }
+];
 
-    static types = [
-        { ARRAY: {'type': 'array'} },
-        { BOOLEAN: {'type': 'boolean'} },
-        { INTEGER: {'type': 'integer'}},
-        { NUMBER: {'type': 'number'} },
-        { NULL: {'type': 'null'}},
-        { OBJECT: {'type': 'object'} },
-        { STRING: {'type': 'string'} }
-    ];
-    static array = new ExtEnum(types).select('ARRAY');
-    static boolean = new ExtEnum(types).select('BOOLEAN');
-    static integer = new ExtEnum(types).select('INTEGER');
-    static number = new ExtEnum(types).select('NUMBER');
-    static null = new ExtEnum(types).select('NULL');
-    static object = new ExtEnum(types).select('OBJECT');
-    static string = new ExtEnum(types).select('STRING');
+export const array = new ExtEnum(types).select('ARRAY');
+export const boolean = new ExtEnum(types).select('BOOLEAN');
+export const integer = new ExtEnum(types).select('INTEGER');
+export const number = new ExtEnum(types).select('NUMBER');
+export const nulled = new ExtEnum(types).select('NULL');
+export const object = new ExtEnum(types).select('OBJECT');
+export const string = new ExtEnum(types).select('STRING');
 
+export class Schema {
     constructor() {
-        this.type = this.object;
+        this.type = object;
         this.require = [];
         this.properties = {};
     }
 
-    add(str, typeObj){
+    add(str, typeEnum){
         this.require.push(str);
-        this.properites[str] = typeObj;
+        this.properties[str] = typeEnum;
     }
  
 }
