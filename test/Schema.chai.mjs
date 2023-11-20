@@ -1,5 +1,6 @@
-import { Schema, array, boolean, integer, number, nulled, object, string } from '../Schema.mjs'
+import { Schema } from '../Schema.mjs'
 import { Assertion, expect } from 'chai'
+import tv4 from 'tv4';
 
 let counter = 1;
 const o = {
@@ -19,16 +20,22 @@ const o = {
     }
 };
 
-describe('Schema', () => {
-    it('Schema Constructor', () => {
+describe('Schema mjs', () => {
+    describe('Schema Constructor', () => {
         it(`Test ${counter}: Types`, () => {
             const schema = new Schema();
-            schema.add('arr', array);
-            schema.add('bool', boolean);
-            schema.add('integer', integer);
-            schema.add('number', number);
-            schema.add('nulled', nulled);
-            schema.add('str', string);
+            console.log('schema:', schema, '\n',
+                        'object:', Schema.object, '\n',
+                        'array:', Schema.array);
+            schema.add('arr', Schema.array);
+            schema.add('bool', Schema.boolean);
+            schema.add('integer', Schema.integer);
+            schema.add('number', Schema.number);
+            schema.add('nulled', Schema.nulled);
+            schema.add('str', Schema.string);
+            schema.add('subobject', Schema.array)
+            
+            expect(tv4.validate(o, schema)).to.be.true;
             
 
 
