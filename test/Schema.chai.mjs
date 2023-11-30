@@ -1,8 +1,15 @@
-import { Schema } from '../Schema.mjs'
+import { Schema, SchemaType } from '../Schema.mjs'
 import { Assertion, expect } from 'chai'
 import tv4 from 'tv4';
 
 let counter = 1;
+const array = new SchemaType().select('ARRAY');
+const boolean = new SchemaType().select('BOOLEAN');
+const integer = new SchemaType().select('INTEGER');
+const number = new SchemaType().select('NUMBER');
+const nulled = new SchemaType().select('NULL');
+const object = new SchemaType().select('OBJECT');
+const string = new SchemaType().select('STRING'); 
 const o = {
     arr: ['str1', 'str2'],
     bool: true,
@@ -24,16 +31,14 @@ describe('Schema mjs', () => {
     describe('Schema Constructor', () => {
         it(`Test ${counter}: Types`, () => {
             const schema = new Schema();
-            console.log('schema:', schema, '\n',
-                        'object:', Schema.object, '\n',
-                        'array:', Schema.array);
-            schema.add('arr', Schema.array);
-            schema.add('bool', Schema.boolean);
-            schema.add('integer', Schema.integer);
-            schema.add('number', Schema.number);
-            schema.add('nulled', Schema.nulled);
-            schema.add('str', Schema.string);
-            schema.add('subobject', Schema.array)
+            schema.add('arr', array);
+            schema.add('bool', boolean);
+            schema.add('integer', integer);
+            schema.add('number', number);
+            schema.add('nulled', nulled);
+            schema.add('str', string);
+            schema.add('subobject', object);
+            console.log('schema:', schema.toString(true));
             
             expect(tv4.validate(o, schema)).to.be.true;
             
