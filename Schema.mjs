@@ -4,7 +4,9 @@
  * GitHub: https://github.com/GeorgeSchafer/SchemaJS
  */
 
-import ExtEnum from './ENUMJS/ExtEnum.mjs'
+'use strict'
+import { default as Enum,
+         ExtEnum} from './ENUMJS/Enum.mjs'
 
 const types = [
     { ARRAY: {'type': 'array'} },
@@ -20,21 +22,32 @@ export class SchemaType extends ExtEnum {
     constructor(){
         super(types);
     }
+
+    // toString(bool){
+    //     return `SchemaType { ${this.toString(bool)} }`;
+    // }
 }
 
-const array = new SchemaType().select('ARRAY');
-const boolean = new SchemaType().select('BOOLEAN');
-const integer = new SchemaType().select('INTEGER');
-const number = new SchemaType().select('NUMBER');
-const nulled = new SchemaType().select('NULL');
-const object = new SchemaType().select('OBJECT');
-const string = new SchemaType().select('STRING'); 
+export const array = new SchemaType()
+array.select('ARRAY');
+export const boolean = new SchemaType()
+boolean.select('BOOLEAN');
+export const integer = new SchemaType()
+integer.select('INTEGER');
+export const number = new SchemaType()
+number.select('NUMBER');
+export const nulled = new SchemaType()
+nulled.select('NULL');
+export const object = new SchemaType()
+object.select('OBJECT');
+export const string = new SchemaType()
+string.select('STRING'); 
 
 
-export class Schema {
+export class Schema {    
 
     constructor() {
-        this.type = object;
+        this.type = "object";
         this.require = [];
         this.properties = {};
     }
@@ -44,36 +57,42 @@ export class Schema {
         this.properties[str] = typeEnum;
     }
 
-    toString(pretty=false){
-        let result = '{';
-        if(pretty){
-            result += '\n';
-            result +=
-                `    type = ${this.type},\n`
-                `    require = ${this.require},\n`
-                `    properties = {\n`;
+    /**
+     * @todo
+     *      Figure out why I am getting a type error and this.type wants to be a function.
+     * 
+     * 
+     * toString(pretty=false){
+     *     let result = '{';
+     *     if(pretty){
+     *         result += '\n';
+     *         result +=
+     *             `    type = ${this.type},\n`
+     *             `    require = ${this.require},\n`
+     *             `    properties = {\n`;
         
         
-            const map = new Map();
-            const keys = this.properties.entries().forEach((key,value) => {
-                result += `        '${key}': '${value}'\n`
-            });
-            result += `    }\n`;
-            result += `}`;
-        } else {
-            result += `{type = ${this.type}}, require = [${this.require}], properties = { `
+     *         const map = new Map();
+     *         const keys = this.properties.entries().forEach((key,value) => {
+     *             result += `        '${key}': '${value}'\n`
+     *         });
+     *         result += `    }\n`;
+     *         result += `}`;
+     *     } else {
+     *         result += `{type = ${this.type}}, require = [${this.require}], properties = { `
 
-            const map = new Map();
-            const keys = this.properties.entries.forEach((key,value) => { 
-                result += `${key}: ${value}, `;
-            });
+     *         const map = new Map();
+     *         const keys = this.properties.entries.forEach((key,value) => { 
+     *             result += `${key}: ${value}, `;
+     *         });
 
-            result = result.substring(0,-2);
+     *         result = result.substring(0,-2);
 
-            result += '}';
-        }
+     *         result += '}';
+     *     }
 
-        return result;
-    }
+     *     return result;
+     * }
+    */
  
 }
