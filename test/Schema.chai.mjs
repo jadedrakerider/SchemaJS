@@ -14,7 +14,7 @@ let counter = 'A';
 const o = {
     arr: ['str1', 'str2'],
     bool: true,
-    number: 1.0,
+    numbe: 1.0, // Error introduced here to test the validator
     nulled: null,
     str: 'string',
     subobject: {
@@ -28,19 +28,23 @@ const o = {
 };
 
 describe('Schema mjs', () => {
+    describe('SchemaTypes', () => {
+
+    })
+
     describe('Schema Constructor', () => {
         it(`Test ${counter}: Types`, () => {
             const schema = new Schema();
-            schema.add('id', 'meh');
+            schema.add('jill', string);
             schema.add('arr', array);
             schema.add('bool', boolean);
             schema.add('number', number);
             schema.add('nulled', nulled);
             schema.add('str', string);
             schema.add('subobject', object);
-            console.log('schema:', schema.toString(true));
-            
-            expect(tv4.validate(o, schema)).to.be.true;
+            console.log('schema:', schema);
+            const result = tv4.validate(o, schema)
+            expect(result).to.be.true;
             
 
 

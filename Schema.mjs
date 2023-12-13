@@ -5,8 +5,8 @@
  */
 
 'use strict'
-import { default as Enum,
-         ExtEnum} from './ENUMJS/Enum.mjs'
+import { ExtEnum } from './ENUMJS/Enum.mjs'
+import ajv from '@ajv'
 
 const types = [
     { ARRAY: {'type': 'array'} },
@@ -43,7 +43,6 @@ object.select('OBJECT');
 export const string = new SchemaType()
 string.select('STRING'); 
 
-
 export class Schema {    
 
     constructor() {
@@ -62,37 +61,22 @@ export class Schema {
      *      Figure out why I am getting a type error and this.type wants to be a function.
      * 
      */
-     toString(pretty=false){
-         let result = '{';
-         if(pretty){
-             result += '\n';
-             result +=
-                 `    type = ${this.type},\n`
-                 `    require = ${this.require},\n`
-                 `    properties = {\n`;
-        
-        
-             const map = new Map();
-             const keys = this.properties.entries().forEach((key,value) => {
-                 result += `        '${key}': '${value}'\n`
-             });
-             result += `    }\n`;
-             result += `}`;
-         } else {
-             result += `{type = ${this.type}}, require = [${this.require}], properties = { `
+    toString( fancy = false ){
+        let result = 'Schema { \n';
 
-             const map = new Map();
-             const keys = this.properties.entries.forEach((key,value) => { 
-                 result += `${key}: ${value}, `;
-             });
 
-             result = result.substring(0,-2);
 
-             result += '}';
-         }
+        if(fancy){
+            console.log('Very fancy')
+        } else {
+            console.log('Not fancy')
+        }
 
-         return result;
-     }
-    
+        result += '}' ;
+        return result ;
+    }
  
 }
+
+
+
