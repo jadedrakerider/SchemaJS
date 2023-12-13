@@ -6,7 +6,6 @@
 
 'use strict'
 import { ExtEnum } from './ENUMJS/Enum.mjs'
-import ajv from '@ajv'
 
 const types = [
     { ARRAY: {'type': 'array'} },
@@ -23,9 +22,9 @@ export class SchemaType extends ExtEnum {
         super(types);
     }
 
-    // toString(bool){
-    //     return `SchemaType { ${this.toString(bool)} }`;
-    // }
+    toString(){ 
+        return `${JSON.stringify(this.valueOf())}`
+    }
 }
 
 export const array = new SchemaType()
@@ -56,27 +55,50 @@ export class Schema {
         this.properties[str] = typeEnum;
     }
 
-    /**
-     * @todo
-     *      Figure out why I am getting a type error and this.type wants to be a function.
-     * 
-     */
-    toString( fancy = false ){
-        let result = 'Schema { \n';
+    toString( pretty=false ){
+        let result = 'Schema {';
+        if(pretty){ result += '\n    '}
 
+        result += `"type": "${this.type}", `
+        if(pretty){ result += '\n    '}
 
+        result += 'require: ['
+        if(pretty){ result += '\n    '}
+        this.require.forEach(element => {
+            if(pretty){ result += '    '}
+            result += `"${element}",`
+            if(pretty){ result += '\n    '}
+        })
+        result += '],'
+        if(pretty){ result += '\n    '}
 
-        if(fancy){
-            console.log('Very fancy')
-        } else {
-            console.log('Not fancy')
+        result += `properties: `
+        if(pretty){ result += '\n    '}
+
+        for( const [key, value] of Object.entries(this.properties)){
+            if(pretty){ result += '    '}
+            result += `${key}: ${value},`
+            if(pretty){ result += '\n    '}
         }
 
-        result += '}' ;
-        return result ;
+        result += '}';
+        if(pretty){ result += '\n'}
+        
+        result += '}'
+
+        result = cleanup(result);
+
+        return result;
     }
  
 }
 
+function cleanup(result){
+    result = result.replaceAll(',]', ']')
+    result = result.replaceAll(',}', '}')
+    result = result.replaceAll(',\n    ]', '\n    ]')
+    result = result.replaceAll(',\n    }', '\n    }')
+    return result;
+}
 
 

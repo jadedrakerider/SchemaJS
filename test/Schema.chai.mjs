@@ -28,12 +28,29 @@ const o = {
 };
 
 describe('Schema mjs', () => {
-    describe('SchemaTypes', () => {
+    describe('SchemaType', () => {
+        it(`Test ${counter}: SchemaType constructor`, () => {    
+            expect(string.keyValueOf()).to.eql({STRING: {'type':'string'}})
+            expect(array.keyValueOf()).to.not.eql({STRING: {'type':'string'}})
+        })
 
+        it(`Test ${counter}: SchemaType.toString()`, () => {
+            expect(string.toString()).to.eql('{"type":"string"}')
+            counter++;
+            })
     })
 
     describe('Schema Constructor', () => {
-        it(`Test ${counter}: Types`, () => {
+        it(`Test ${counter}: toString`, () => {
+            const schema = new Schema();
+            schema.add('token', string)
+            schema.add('Jenny', number)
+            console.log(schema.toString(),'\n','\n')
+            console.log('Pretty', schema.toString(true))            
+            counter++;
+        })
+
+        it(`Test ${counter}: Recognizes Types`, () => {
             const schema = new Schema();
             schema.add('jill', string);
             schema.add('arr', array);
@@ -42,14 +59,10 @@ describe('Schema mjs', () => {
             schema.add('nulled', nulled);
             schema.add('str', string);
             schema.add('subobject', object);
-            console.log('schema:', schema);
             const result = tv4.validate(o, schema)
             expect(result).to.be.true;
-            
-
-
-            
-
+                        
+            counter++;
         });
     });
 });
@@ -60,10 +73,11 @@ describe('Schema mjs', () => {
 
 
 /*
-describe('', () => {
-    it('', () => {
-        it(``, () => {
+describe('SUMMARY', () => {
+    it('Summary', () => {
+        it(`Test ${counter}: SUMMARY`, () => {
 
+        counter++;
         })
     })
 })
