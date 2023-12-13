@@ -61,38 +61,38 @@ export class Schema {
      * @todo
      *      Figure out why I am getting a type error and this.type wants to be a function.
      * 
-     * 
-     * toString(pretty=false){
-     *     let result = '{';
-     *     if(pretty){
-     *         result += '\n';
-     *         result +=
-     *             `    type = ${this.type},\n`
-     *             `    require = ${this.require},\n`
-     *             `    properties = {\n`;
+     */
+     toString(pretty=false){
+         let result = '{';
+         if(pretty){
+             result += '\n';
+             result +=
+                 `    type = ${this.type},\n`
+                 `    require = ${this.require},\n`
+                 `    properties = {\n`;
         
         
-     *         const map = new Map();
-     *         const keys = this.properties.entries().forEach((key,value) => {
-     *             result += `        '${key}': '${value}'\n`
-     *         });
-     *         result += `    }\n`;
-     *         result += `}`;
-     *     } else {
-     *         result += `{type = ${this.type}}, require = [${this.require}], properties = { `
+             const map = new Map();
+             const keys = this.properties.entries().forEach((key,value) => {
+                 result += `        '${key}': '${value}'\n`
+             });
+             result += `    }\n`;
+             result += `}`;
+         } else {
+             result += `{type = ${this.type}}, require = [${this.require}], properties = { `
 
-     *         const map = new Map();
-     *         const keys = this.properties.entries.forEach((key,value) => { 
-     *             result += `${key}: ${value}, `;
-     *         });
+             const map = new Map();
+             const keys = this.properties.entries.forEach((key,value) => { 
+                 result += `${key}: ${value}, `;
+             });
 
-     *         result = result.substring(0,-2);
+             result = result.substring(0,-2);
 
-     *         result += '}';
-     *     }
+             result += '}';
+         }
 
-     *     return result;
-     * }
-    */
+         return result;
+     }
+    
  
 }

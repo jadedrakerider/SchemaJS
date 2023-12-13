@@ -31,6 +31,7 @@ describe('Schema mjs', () => {
     describe('Schema Constructor', () => {
         it(`Test ${counter}: Types`, () => {
             const schema = new Schema();
+            schema.add('id', 'meh');
             schema.add('arr', array);
             schema.add('bool', boolean);
             schema.add('number', number);
