@@ -9,7 +9,7 @@
  */
 
 'use strict'
-import { ExtEnum } from './ENUMJS/Enum.mjs'
+import { ExtEnum } from './ENUMJS/ENUM.mjs'
 
 const types = [
     { ARRAY: {'type': 'array'} },
