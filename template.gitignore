@@ -1,0 +1,6 @@
+/.vscode
+/sh
+
+.DS_store
+.gitignore
+.gitsubmodules
