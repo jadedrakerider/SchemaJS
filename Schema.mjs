@@ -2,6 +2,8 @@
  * © 2023 George Schafer george.reflections@gmail.com
  * MIT License
  * GitHub: https://github.com/GeorgeSchafer/SchemaJS
+ * @description
+ *      SchemaJS is a class for API Schema testing.
  */
 
 'use strict'
@@ -87,6 +89,7 @@ export class Schema {
         result += '}'
 
         result = cleanup(result);
+        // if(pretty){ result = prettify(result)}
 
         return result;
     }
@@ -96,9 +99,21 @@ export class Schema {
 function cleanup(result){
     result = result.replaceAll(',]', ']')
     result = result.replaceAll(',}', '}')
-    result = result.replaceAll(',\n    ]', '\n    ]')
-    result = result.replaceAll(',\n    }', '\n    }')
     return result;
+}
+
+/**
+ * @todo write string-parsing algorithm for prettifying toString
+ * @param {string} result
+ * @returns {string} 
+ */
+function prettify(result){
+    result = result.replaceAll(',', ',\n')
+    result = result.replaceAll('{', '{\n    ')
+    result = result.replaceAll('}', '{\n    }')
+    result = result.replaceAll('[', '[\n    ')
+    result = result.replaceAll('],', '\n    }')
+    return result
 }
 
 
