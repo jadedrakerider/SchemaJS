@@ -4,6 +4,8 @@
  * GitHub: https://github.com/GeorgeSchafer/SchemaJS
  * @description
  *      SchemaJS is a class for API Schema testing.
+ *      I got tired of re-writing these over and over,
+ *      so now you don't have to.
  */
 
 'use strict'
