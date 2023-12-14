@@ -25,6 +25,36 @@ const o = {
         str: 'another'
     }
 };
+
+const unit = {
+    'id': number,
+    'state': string,
+    'zip': string,
+    'group': object,
+    'country': string,
+    'group': object,
+    'city': string,
+    'timezone': string,
+    'marketing_name': string,
+    'street_address_1': string,
+    'street_address_2': string,
+    'unit_code': string,
+    'hub': object,
+    'hub_id': number,
+    'group_id': number,
+    'parking_enabled': boolean,
+    'temperature_scale': string,
+    'has_hub': boolean,
+    'broadcast_messages_enabled': boolean,
+    'service_requests_enabled': boolean,
+    'ring_enabled': boolean,
+    'security_system_enabled': boolean,
+    'livly_enabled': boolean,
+    'portal_only': boolean,
+    'urgent_request_custom_copy': string,
+    'urgent_request': boolean
+}
+
 const ajv = new Ajv()
 const vocabulary = [
     'index',
@@ -70,6 +100,17 @@ describe('Schema mjs', () => {
             expect(result).to.be.true;
                         
         });
+        counter++;
+
+        it(`Test ${counter}: Schema.addProfile(profile)`, () => {
+            const unitSchema = new Schema()
+            unitSchema.addProfile(unit)
+
+            const validate = ajv.compile(unitSchema)
+            const result = validate(unit);
+
+            expect(result).to.be.true;
+        })
         counter++;
     });
 });
