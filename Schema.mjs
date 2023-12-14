@@ -8,7 +8,7 @@
  *      so now you don't have to. IN ES6!!!
  */
 
-'use strict'
+'use strict';
 import { ExtEnum } from './ENUMJS/ENUM.mjs'
 
 const types = [
