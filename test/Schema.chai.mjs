@@ -8,9 +8,8 @@ import { Schema,
          object,
          string } from '../Schema.mjs'
 import { expect } from 'chai'
-import tv4 from 'tv4';
+import Ajv from "ajv";
 
-let counter = 'A';
 const o = {
     arr: ['str1', 'str2'],
     bool: true,
@@ -26,6 +25,13 @@ const o = {
         str: 'another'
     }
 };
+const ajv = new Ajv()
+const vocabulary = [
+    'index',
+    'codex',
+]
+ajv.addVocabulary(vocabulary)
+let counter = 1;
 
 describe('Schema mjs', () => {
     describe('SchemaType', () => {
@@ -33,37 +39,38 @@ describe('Schema mjs', () => {
             expect(string.keyValueOf()).to.eql({STRING: {'type':'string'}})
             expect(array.keyValueOf()).to.not.eql({STRING: {'type':'string'}})
         })
+        counter++;
 
         it(`Test ${counter}: SchemaType.toString()`, () => {
             expect(string.toString()).to.eql('{"type":"string"}')
-            counter++;
-            })
+        })
+        counter++;
     })
 
     describe('Schema Constructor', () => {
         it(`Test ${counter}: toString`, () => {
-            const schema = new Schema();
+            const schema = new Schema()
             schema.add('token', string)
-            schema.add('Jenny', number)
-            console.log(schema.toString(),'\n','\n')
-            console.log('Pretty', schema.toString(true))            
-            counter++;
+            schema.add('Jenny', number)        
         })
+        counter++;
 
         it(`Test ${counter}: Recognizes Types`, () => {
             const schema = new Schema();
-            // schema.add('jill', string);
             schema.add('arr', array);
             schema.add('bool', boolean);
             schema.add('number', number);
             schema.add('nulled', nulled);
             schema.add('str', string);
             schema.add('subobject', object);
-            const result = tv4.validate(o, schema)
+
+            const validate = ajv.compile(schema);
+            const result = validate(o);
+
             expect(result).to.be.true;
                         
-            counter++;
         });
+        counter++;
     });
 });
 
