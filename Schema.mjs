@@ -59,6 +59,19 @@ export class Schema {
         this.properties[str] = typeEnum;
     }
 
+    /**
+     * @todo 
+     *      Fix
+     * @param {profile}
+     *      profile are an array of 
+     *      key: schemaType object pairs.
+     */
+    addProfile(profile){
+        Object.keys(profile).forEach((field)=>{
+            this.add(field, profile[field])
+        })
+    }
+
     toString( pretty=false ){
         let result = 'Schema {';
         if(pretty){ result += '\n    '}
@@ -92,16 +105,6 @@ export class Schema {
 
         result = cleanup(result);
         // if(pretty){ result = prettify(result)}
-
-        return result;
-    }
-
-    stringed(){
-        const result = {}
-
-        result["type"] = this.type;
-        result["required"] = this.required;
-        result["properties"] = this.properties;
 
         return result;
     }
