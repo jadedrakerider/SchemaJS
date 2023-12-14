@@ -166,7 +166,7 @@ const types = [
     { STRING: {'type': 'string'} }
 ];
 
-class SchemaType extends ExtEnum {
+export class SchemaType extends ExtEnum {
     constructor(){
         super(types);
     }
@@ -176,23 +176,22 @@ class SchemaType extends ExtEnum {
     }
 }
 
-
-const array = new SchemaType()
+export const array = new SchemaType()
 array.select('ARRAY');
-const boolean = new SchemaType()
+export const boolean = new SchemaType()
 boolean.select('BOOLEAN');
-const integer = new SchemaType()
+export const integer = new SchemaType()
 integer.select('INTEGER');
-const number = new SchemaType()
+export const number = new SchemaType()
 number.select('NUMBER');
-const nulled = new SchemaType()
+export const nulled = new SchemaType()
 nulled.select('NULL');
-const object = new SchemaType()
+export const object = new SchemaType()
 object.select('OBJECT');
-const string = new SchemaType()
+export const string = new SchemaType()
 string.select('STRING'); 
 
-class Schema {
+export class Schema {    
 
     constructor() {
         this.type = "object";
@@ -205,6 +204,19 @@ class Schema {
         this.properties[str] = typeEnum;
     }
 
+    /**
+     * @todo 
+     *      Fix
+     * @param {profile}
+     *      profile are an array of 
+     *      key: schemaType object pairs.
+     */
+    addProfile(profile){
+        Object.keys(profile).forEach((field)=>{
+            this.add(field, profile[field])
+        })
+    }
+
     toString( pretty=false ){
         let result = 'Schema {';
         if(pretty){ result += '\n    '}
@@ -212,7 +224,7 @@ class Schema {
         result += `"type": "${this.type}", `
         if(pretty){ result += '\n    '}
 
-        result += 'required: ['
+        result += '"required": ['
         if(pretty){ result += '\n    '}
         this.required.forEach(element => {
             if(pretty){ result += '    '}
@@ -222,12 +234,12 @@ class Schema {
         result += '],'
         if(pretty){ result += '\n    '}
 
-        result += `properties: `
+        result += `"properties": {`
         if(pretty){ result += '\n    '}
 
         for( const [key, value] of Object.entries(this.properties)){
             if(pretty){ result += '    '}
-            result += `${key}: ${value},`
+            result += `"${key}": "${value}",`
             if(pretty){ result += '\n    '}
         }
 
@@ -237,9 +249,31 @@ class Schema {
         result += '}'
 
         result = cleanup(result);
+        // if(pretty){ result = prettify(result)}
 
         return result;
     }
+ 
+}
+
+function cleanup(result){
+    result = result.replaceAll(',]', ']')
+    result = result.replaceAll(',}', '}')
+    return result;
+}
+
+/**
+ * @todo write string-parsing algorithm for prettifying toString
+ * @param {string} result
+ * @returns {string} 
+ */
+function prettify(result){
+    result = result.replaceAll(',', ',\n')
+    result = result.replaceAll('{', '{\n    ')
+    result = result.replaceAll('}', '{\n    }')
+    result = result.replaceAll('[', '[\n    ')
+    result = result.replaceAll('],', '\n    }')
+    return result
 }
 
 function cleanup(result){
