@@ -50,12 +50,12 @@ export class Schema {
 
     constructor() {
         this.type = "object";
-        this.require = [];
+        this.required = [];
         this.properties = {};
     }
 
     add(str, typeEnum){
-        this.require.push(str);
+        this.required.push(str);
         this.properties[str] = typeEnum;
     }
 
@@ -66,9 +66,9 @@ export class Schema {
         result += `"type": "${this.type}", `
         if(pretty){ result += '\n    '}
 
-        result += 'require: ['
+        result += '"required": ['
         if(pretty){ result += '\n    '}
-        this.require.forEach(element => {
+        this.required.forEach(element => {
             if(pretty){ result += '    '}
             result += `"${element}",`
             if(pretty){ result += '\n    '}
@@ -76,12 +76,12 @@ export class Schema {
         result += '],'
         if(pretty){ result += '\n    '}
 
-        result += `properties: `
+        result += `"properties": {`
         if(pretty){ result += '\n    '}
 
         for( const [key, value] of Object.entries(this.properties)){
             if(pretty){ result += '    '}
-            result += `${key}: ${value},`
+            result += `"${key}": "${value}",`
             if(pretty){ result += '\n    '}
         }
 
@@ -92,6 +92,16 @@ export class Schema {
 
         result = cleanup(result);
         // if(pretty){ result = prettify(result)}
+
+        return result;
+    }
+
+    stringed(){
+        const result = {}
+
+        result["type"] = this.type;
+        result["required"] = this.required;
+        result["properties"] = this.properties;
 
         return result;
     }

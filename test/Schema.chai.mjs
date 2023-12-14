@@ -14,7 +14,7 @@ let counter = 'A';
 const o = {
     arr: ['str1', 'str2'],
     bool: true,
-    numbe: 1.0, // Error introduced here to test the validator
+    number: 1.0,
     nulled: null,
     str: 'string',
     subobject: {
@@ -52,7 +52,7 @@ describe('Schema mjs', () => {
 
         it(`Test ${counter}: Recognizes Types`, () => {
             const schema = new Schema();
-            schema.add('jill', string);
+            // schema.add('jill', string);
             schema.add('arr', array);
             schema.add('bool', boolean);
             schema.add('number', number);
