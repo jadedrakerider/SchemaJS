@@ -31,6 +31,19 @@ export class SchemaType extends ExtEnum {
     }
 }
 
+/**
+ * @todo SchemaField class
+ *      Create a shortcut that uses the 
+ *      'field': SchemaType pattern for 
+ *      building schema.
+ */
+export class SchemaField {
+    constructor({key: schemaType}){
+        this.key = key;
+        this.schemaType = schemaType;
+    }
+}
+
 export const array = new SchemaType()
 array.select('ARRAY');
 export const boolean = new SchemaType()
@@ -57,6 +70,15 @@ export class Schema {
     add(str, typeEnum){
         this.required.push(str);
         this.properties[str] = typeEnum;
+    }
+
+    /**
+     * @todo Build the Schema.addField() method
+     * @param {field} field is an object with a key and a SchemaType.
+     *          The key is descriptive of what the SchemaType describes.
+     */
+    addField(field){
+        
     }
 
     /**
