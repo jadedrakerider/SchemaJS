@@ -68,13 +68,13 @@ describe('Schema mjs', () => {
         it(`Test ${counter}: SchemaType constructor`, () => {    
             expect(string.keyValueOf()).to.eql({STRING: {'type':'string'}})
             expect(array.keyValueOf()).to.not.eql({STRING: {'type':'string'}})
+            counter++;
         })
-        counter++;
 
         it(`Test ${counter}: SchemaType.toString()`, () => {
             expect(string.toString()).to.eql('{"type":"string"}')
+            counter++;
         })
-        counter++;
     })
 
     describe('Schema Constructor', () => {
@@ -82,8 +82,8 @@ describe('Schema mjs', () => {
             const schema = new Schema()
             schema.add('token', string)
             schema.add('Jenny', number)        
+            counter++;
         })
-        counter++;
 
         it(`Test ${counter}: Recognizes Types`, () => {
             const schema = new Schema();
@@ -98,9 +98,8 @@ describe('Schema mjs', () => {
             const result = validate(o);
 
             expect(result).to.be.true;
-                        
-        });
-        counter++;
+            counter++;                        
+        })
 
         it(`Test ${counter}: Schema.addProfile(profile)`, () => {
             const unitSchema = new Schema()
@@ -110,8 +109,8 @@ describe('Schema mjs', () => {
             const result = validate(unit);
 
             expect(result).to.be.true;
+            counter++;
         })
-        counter++;
     });
 });
 
