@@ -31,19 +31,6 @@ export class SchemaType extends ExtEnum {
     }
 }
 
-/**
- * @todo SchemaField class
- *      Create a shortcut that uses the 
- *      'field': SchemaType pattern for 
- *      building schema.
- */
-export class SchemaField {
-    constructor({key: schemaType}){
-        this.key = key;
-        this.schemaType = schemaType;
-    }
-}
-
 export const array = new SchemaType()
 array.select('ARRAY');
 export const boolean = new SchemaType()
@@ -73,20 +60,11 @@ export class Schema {
     }
 
     /**
-     * @todo Build the Schema.addField() method
-     * @param {field} field is an object with a key and a SchemaType.
-     *          The key is descriptive of what the SchemaType describes.
-     */
-    addField(field){
-        
-    }
-
-    /**
      * @todo 
      *      Fix
      * @param {profile}
-     *      profile are an array of 
-     *      key: schemaType object pairs.
+     *      profile are an object of 
+     *      key: schemaType pairs.
      */
     addProfile(profile){
         Object.keys(profile).forEach((field)=>{
@@ -95,38 +73,58 @@ export class Schema {
     }
 
     toString( pretty=false ){
-        let result = 'Schema {';
-        if(pretty){ result += '\n    '}
+        let result = '';
+        const schema = 'Schema {';
+        const required = '"required": [';
+        const closeBracket = '],';
+        const properties = `"properties": {`;
+        const closeBrace = '}';
+        const ntab = '\n    ';
+        const tab = '    ';
 
-        result += `"type": "${this.type}", `
-        if(pretty){ result += '\n    '}
+        pretty ? result += schema + ntab
+               : result += schema;
 
-        result += '"required": ['
-        if(pretty){ result += '\n    '}
-        this.required.forEach(element => {
-            if(pretty){ result += '    '}
-            result += `"${element}",`
-            if(pretty){ result += '\n    '}
-        })
-        result += '],'
-        if(pretty){ result += '\n    '}
+        pretty ? result += `"type": "${this.type}", ` + ntab
+               : result += `"type": "${this.type}", `;
 
-        result += `"properties": {`
-        if(pretty){ result += '\n    '}
+        pretty ? result += ntab + required
+               : result += required;
 
-        for( const [key, value] of Object.entries(this.properties)){
-            if(pretty){ result += '    '}
-            result += `"${key}": "${value}",`
-            if(pretty){ result += '\n    '}
+        if(pretty){
+            result += ntab
+            this.required.forEach(element => {
+                result += tab + `"${element}",` + ntab;
+            })
+        } else {
+            this.required.forEach(element => {
+                result += `"${element}",`;
+            })
         }
 
-        result += '}';
-        if(pretty){ result += '\n'}
+        pretty ? result += closeBracket + ntab
+               : result += closeBracket;
+
+
+        pretty ? result += properties + ntab
+               : result += properties;
+
+        if(pretty){
+            for( const [key, value] of Object.entries(this.properties)){
+                result += ntab + `"${key}": "${value}",` + ntab;
+            }
+        } else {
+            for( const [key, value] of Object.entries(this.properties)){
+                result += `"${key}": "${value}",`;
+            }
+        }
+
+        pretty ? result += closeBrace + ntab
+               : result += closeBrace;
         
-        result += '}'
+        result += closeBrace;
 
         result = cleanup(result);
-        // if(pretty){ result = prettify(result)}
 
         return result;
     }
@@ -140,16 +138,16 @@ function cleanup(result){
 }
 
 /**
- * @todo write string-parsing algorithm for prettifying toString
+ * @todo finish writing string-parsing algorithm for prettifying toString
  * @param {string} result
  * @returns {string} 
  */
 function prettify(result){
     result = result.replaceAll(',', ',\n')
     result = result.replaceAll('{', '{\n    ')
-    result = result.replaceAll('}', '{\n    }')
+    result = result.replaceAll('}', '    }\n')
     result = result.replaceAll('[', '[\n    ')
-    result = result.replaceAll('],', '\n    }')
+    result = result.replaceAll(']', '    ]\n')
     return result
 }
 
