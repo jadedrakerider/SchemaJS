@@ -5,6 +5,10 @@
  * @description
  *      Enum is an Enum implementation for Javascript with an 
  *      optional Extended Enum (ExtEnum) subclass.
+ * @abstract
+ *      The Postman implementation has all of its libraries 
+ *      compiled into one file to make it easier to implement
+ *      and copy-paste into Postman as needed.
  */
  
 class Enum {
@@ -311,5 +315,3 @@ function copyString(str){
 }
 
 // end SchemaJS
-
-module.exports = Schema;
