@@ -19,7 +19,7 @@ const o = {
         subarr: [],
         subbool: false,
         subint: -2,
-        sibnum: -3.14,
+        subnum: -3.14,
         nulled: null,
         str: 'another'
     }
