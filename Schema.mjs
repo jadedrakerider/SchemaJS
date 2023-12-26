@@ -21,7 +21,7 @@ const types = [
     { STRING: {'type': 'string'} }
 ];
 
-export class SchemaType extends ExtEnum {
+class SchemaType extends ExtEnum {
     constructor(){
         super(types);
     }
@@ -31,22 +31,64 @@ export class SchemaType extends ExtEnum {
     }
 }
 
-export const array = new SchemaType()
-array.select('ARRAY');
-export const boolean = new SchemaType()
-boolean.select('BOOLEAN');
-export const integer = new SchemaType()
-integer.select('INTEGER');
-export const number = new SchemaType()
-number.select('NUMBER');
-export const nulled = new SchemaType()
-nulled.select('NULL');
-export const object = new SchemaType()
-object.select('OBJECT');
-export const string = new SchemaType()
-string.select('STRING'); 
+export class ArrayType extends SchemaType {
+    constructor(){
+        super()
+        this.select('ARRAY')
+    }
+}
+
+export class BooleanType extends SchemaType {
+    constructor(){
+        super()
+        this.select('BOOLEAN')
+    }
+}
+
+export class IntegerType extends SchemaType {
+    constructor(){
+        super()
+        this.select('INTEGER')
+    }
+}
+
+export class NumberType extends SchemaType {
+    constructor(){
+        super()
+        this.select('NUMBER')
+    }
+}
+
+export class NulledType extends SchemaType {
+    constructor(){
+        super()
+        this.select('NULL')
+    }
+}
+
+export class ObjectType extends SchemaType {
+    constructor(){
+        super()
+        this.select('OBJECT')
+    }
+}
+
+export class StringType extends SchemaType {
+    constructor(){
+        super()
+        this.select('STRING')
+    }
+}
 
 export class Schema {    
+
+    static array = new ArrayType()
+    static boolean = new BooleanType()
+    static integer = new IntegerType()
+    static number = new NumberType()
+    static nulled = new NulledType()
+    static object = new ObjectType()
+    static string = new StringType()
 
     constructor() {
         this.type = "object";
@@ -59,13 +101,6 @@ export class Schema {
         this.properties[str] = typeEnum;
     }
 
-    /**
-     * @todo 
-     *      Fix
-     * @param {profile}
-     *      profile are an object of 
-     *      key: schemaType pairs.
-     */
     addProfile(profile){
         Object.keys(profile).forEach((field)=>{
             this.add(field, profile[field])
