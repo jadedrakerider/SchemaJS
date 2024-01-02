@@ -276,4 +276,17 @@ function prettify(outputString){
     return outputString
 }
 
+module.exports = {
+    Schema,
+    ArrayType,
+    BooleanType,
+    IntegerType,
+    NulledType,
+    NumberType,
+    ObjectType,
+    StringType
+}
+
 // end SchemaJS
+
+
