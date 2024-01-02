@@ -10,194 +10,11 @@
  *      compiled into one file to make it easier to implement
  *      and copy-paste into Postman as needed.
  */
- 
-class Enum {
-    constructor(keyArray){
-        /**
-         * @var keyArray
-         *      an array of strings of possible values. By default, 
-         *      the initial value is decalred the value of the Enum.
-         *      Enum converts strings to upper case.
-         * 
-         * @var index
-         *      Key:boolean pairs that keep track of available and 
-         *      the value of the Enum
-         * 
-         * @method toString takes @var pretty 
-         * is a boolean that determines if the
-         *          resulting string should be human-readable.
-         * 
-         */
-        // 
-        this.index = {}; 
+'use strict'
+const { ExtEnum } = require('./ENUMJS/ENUM.cjs')
 
-        if(Array.isArray(keyArray)){
-            keyArray.forEach(key => {
-                this.addKey(key);
-            })
-            this.select(keyArray[0]);
-        } else {
-            throw new InvalidArrayError(keyArray);
-        }
-    }
 
-    addKey(key){
-        const ENUM = this.index;
-        if(typeof key === 'string'){
-            key = copyString(key);
-            key = ensureUppercase(key);
-        }
-        ENUM[key] = false;
-    }
 
-    addKeys(keyArray){
-        keyArray.forEach( key => {
-            this.addKey(key);
-        })
-    }
-
-    select(key){
-        key = ensureUppercase(key);
-
-        const ENUM = this.index;
-
-        Object.keys(ENUM).forEach(key => {
-            ENUM[key] = false;
-        });
-
-        ENUM[key] = true;
-    }
-
-    valueOf(){
-        const ENUM = this.index;
-        
-        return Object.keys(ENUM).find(key => ENUM[key]);
-    }
-
-    toString(pretty=false){
-        const ENUM = this.index;
-        const keyValuePairs = Object.keys(ENUM).map(key => `{${key}: ${ENUM[key]}}` );
-
-        if(pretty){
-            return `Enum {\n    ${keyValuePairs.join(',\n    ')}\n}`;
-        } else {
-            return `Enum {${keyValuePairs.join(',')}}`;
-        }
-    }
-}
-
-class ExtEnum extends Enum {
-    /**
-     * @param {objArray} is an array of key:value objects.
-     *      The keys are passed to the base Enum constructor 
-     *      for the Index while the objArray is set to 
-     * @var codex is a glossary 
-     *      which holds the value of each Enumerated 
-     *      Type associated with their keys.
-     *      Codex has to be declared under super keyword
-     *      because the super keyword has to be called in
-     *      the same block. In order to perform the 
-     *      InvalidArrayError check;
-     */
-    constructor(objArray) { // obj = { key: value }
-
-        if(Array.isArray(objArray)){
-            const data = splitObjectKeysValues(objArray);
-            super(data.keys);
-            this.codex = {};
-            this.addValues(objArray);
-        } else {
-            throw new InvalidArrayError();
-        }
-
-    }
-
-    addValue(keyValuePair){
-        let key = Object.keys(keyValuePair)[0];
-        let value = Object.values(keyValuePair)[0]; // [key] string of color name
-        key = ensureUppercase(key);
-        this.codex[key] = value;
-    }
-
-    addValues(keyValuePairArray){
-        keyValuePairArray.forEach(pair => {
-            this.addValue(pair);
-        })
-    }
-
-    valueOf(){
-        const index = this.index;
-        const keys = Object.keys(index)
-        const codex = this.codex;
-
-        for( let i = 0 ; i < keys.length ; i++){
-            const cipher = keys[i]
-            if(index[cipher]){
-                return codex[cipher]
-            }
-        }
-        
-    }
-
-    keyValueOf(){
-        const index = this.index;
-        const keys = Object.keys(index)
-        const codex = this.codex;
-        let pair = {}
-
-        for( let i = 0 ; i < keys.length ; i++ ){
-            const cipher = keys[i]
-
-            if(index[cipher]){
-                pair[cipher] = codex[cipher];
-                return pair ;
-            }
-        }
-    }
-
-    toString(){ 
-        return `ExtEnum ${JSON.stringify(this.valueOf())}`
-    }
-}
-
-// Enum Utility Functions
-function ensureUppercase(key){
-    if (typeof key === "string") {
-        return key.toUpperCase();
-    } else {
-        return key;
-    }
-}
-
-function splitObjectKeysValues(objArray){
-    const data = {
-        keys : [],
-        values : []
-    };
-
-    objArray.forEach(obj => {
-        const key = Object.keys(obj)[0];
-        const value = Object.values(obj)[0];
-        data.keys.push(key)
-        data.values.push(value)
-    });
-
-    return data;
-}
-
-/**
- * @function
- * @summary
- *      This is used to create a copy of the string to prevent the key from 
- *      being modified prematurely and avoid using the string object wrapper.
- * @param str is a string to copy. 
- * @returns a duplicate of the string.
- */
-function copyString(str){
-    return str.substring(0); // 
-}
-
-import { ExtEnum } from './ENUMJS/ENUM.mjs'
 
 const types = [
     { ARRAY: {'type': 'array'} },
@@ -229,7 +46,7 @@ class SchemaType extends ExtEnum {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to an array.
  */
-export class ArrayType extends SchemaType {
+class ArrayType extends SchemaType {
     constructor(){
         super()
         this.select('ARRAY')
@@ -242,7 +59,7 @@ export class ArrayType extends SchemaType {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to a integer.
  */
-export class BooleanType extends SchemaType {
+class BooleanType extends SchemaType {
     constructor(){
         super()
         this.select('BOOLEAN')
@@ -255,7 +72,7 @@ export class BooleanType extends SchemaType {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to an array.
  */
-export class IntegerType extends SchemaType {
+class IntegerType extends SchemaType {
     constructor(){
         super()
         this.select('INTEGER')
@@ -268,14 +85,14 @@ export class IntegerType extends SchemaType {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to a number.
  */
-export class NumberType extends SchemaType {
+class NumberType extends SchemaType {
     constructor(){
         super()
         this.select('NUMBER')
     }
 }
 
-export class NulledType extends SchemaType {
+class NulledType extends SchemaType {
     constructor(){
         super()
         this.select('NULL')
@@ -288,7 +105,7 @@ export class NulledType extends SchemaType {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to an Object.
  */
-export class ObjectType extends SchemaType {
+class ObjectType extends SchemaType {
     constructor(){
         super()
         this.select('OBJECT')
@@ -300,7 +117,7 @@ export class ObjectType extends SchemaType {
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to a string.
  */
-export class StringType extends SchemaType {
+class StringType extends SchemaType {
     constructor(){
         super()
         this.select('STRING')
@@ -313,7 +130,7 @@ export class StringType extends SchemaType {
  *      Schema is an object which outlines the data expected to find in
  *      an object.
  */
-export class Schema {    
+class Schema {    
 
     static array = new ArrayType()
     static boolean = new BooleanType()
