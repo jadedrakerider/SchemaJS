@@ -21,6 +21,10 @@ const types = [
     { STRING: {'type': 'string'} }
 ];
 
+/**
+ * @class
+ * @summary A Schematype is an Extended Enum corresponding to a data type found in a schema. 
+ */
 class SchemaType extends ExtEnum {
     constructor(){
         super(types);
@@ -31,6 +35,12 @@ class SchemaType extends ExtEnum {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to an array.
+ */
 export class ArrayType extends SchemaType {
     constructor(){
         super()
@@ -38,6 +48,12 @@ export class ArrayType extends SchemaType {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to a integer.
+ */
 export class BooleanType extends SchemaType {
     constructor(){
         super()
@@ -45,6 +61,12 @@ export class BooleanType extends SchemaType {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to an array.
+ */
 export class IntegerType extends SchemaType {
     constructor(){
         super()
@@ -52,6 +74,12 @@ export class IntegerType extends SchemaType {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to a number.
+ */
 export class NumberType extends SchemaType {
     constructor(){
         super()
@@ -66,13 +94,24 @@ export class NulledType extends SchemaType {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to an Object.
+ */
 export class ObjectType extends SchemaType {
     constructor(){
         super()
         this.select('OBJECT')
     }
 }
-
+/**
+ * @class
+ * @summary
+ *      ArrayType is a pre-baked type of element found in a schema
+ *      corresponding to a string.
+ */
 export class StringType extends SchemaType {
     constructor(){
         super()
@@ -80,6 +119,12 @@ export class StringType extends SchemaType {
     }
 }
 
+/**
+ * @class
+ * @summary
+ *      Schema is an object which outlines the data expected to find in
+ *      an object.
+ */
 export class Schema {    
 
     static array = new ArrayType()
@@ -91,24 +136,57 @@ export class Schema {
     static string = new StringType()
 
     constructor() {
+        /**
+         * @property {string} type 
+         *      a string which names the expected type of data. Objects 
+         *      are always objects, and that is why this is hard coded 
+         *      here.
+         * @property {array} required
+         *      an array of strings with the keys found in the object 
+         *      we will find in the schema.
+         * @property {object} propertiees
+         *      an object which holds the SchemaTypes of the SchemaType
+         *      class. This is where the expectations of required are 
+         *      defined.
+        */
         this.type = "object";
         this.required = [];
         this.properties = {};
     }
 
-    add(str, typeEnum){
+    /**
+     * @method add
+     * @param {string} str 
+     * @param {SchemaType} type
+     * @summary
+     *      Adds the name of a field and its type to the schema.
+     */
+    add(str, type){
         this.required.push(str);
-        this.properties[str] = typeEnum;
+        this.properties[str] = type;
     }
 
+    /**
+     * @method addProfile
+     * @param {Object<SchemaType>} profile 
+     * @summary
+     *      Takes a collection of SchemaTypes collected into an
+     *      object and assigns them where they need to be.
+     */
     addProfile(profile){
         Object.keys(profile).forEach((field)=>{
             this.add(field, profile[field])
         })
     }
 
+    /**
+     * @method toString
+     * @param {boolean} pretty 
+     * @returns {string}
+     *      Returns a string in either a human-readable format (if pretty == true)
+     */
     toString( pretty=false ){
-        let result = '';
+        let outputString = '';
         const schema = 'Schema {';
         const required = '"required": [';
         const closeBracket = '],';
@@ -117,73 +195,80 @@ export class Schema {
         const ntab = '\n    ';
         const tab = '    ';
 
-        pretty ? result += schema + ntab
-               : result += schema;
+        pretty ? outputString += schema + ntab
+               : outputString += schema;
 
-        pretty ? result += `"type": "${this.type}", ` + ntab
-               : result += `"type": "${this.type}", `;
+        pretty ? outputString += `"type": "${this.type}", ` + ntab
+               : outputString += `"type": "${this.type}", `;
 
-        pretty ? result += ntab + required
-               : result += required;
+        pretty ? outputString += ntab + required
+               : outputString += required;
 
         if(pretty){
-            result += ntab
+            outputString += ntab
             this.required.forEach(element => {
-                result += tab + `"${element}",` + ntab;
+                outputString += tab + `"${element}",` + ntab;
             })
         } else {
             this.required.forEach(element => {
-                result += `"${element}",`;
+                outputString += `"${element}",`;
             })
         }
 
-        pretty ? result += closeBracket + ntab
-               : result += closeBracket;
+        pretty ? outputString += closeBracket + ntab
+               : outputString += closeBracket;
 
 
-        pretty ? result += properties + ntab
-               : result += properties;
+        pretty ? outputString += properties + ntab
+               : outputString += properties;
 
         if(pretty){
             for( const [key, value] of Object.entries(this.properties)){
-                result += ntab + `"${key}": "${value}",` + ntab;
+                outputString += ntab + `"${key}": "${value}",` + ntab;
             }
         } else {
             for( const [key, value] of Object.entries(this.properties)){
-                result += `"${key}": "${value}",`;
+                outputString += `"${key}": "${value}",`;
             }
         }
 
-        pretty ? result += closeBrace + ntab
-               : result += closeBrace;
+        pretty ? outputString += closeBrace + ntab
+               : outputString += closeBrace;
         
-        result += closeBrace;
+        outputString += closeBrace;
 
-        result = cleanup(result);
+        outputString = cleanup(outputString);
 
-        return result;
+        return outputString;
     }
  
 }
 
-function cleanup(result){
-    result = result.replaceAll(',]', ']')
-    result = result.replaceAll(',}', '}')
-    return result;
+/**
+ * @function cleanup
+ * @summary
+ *      cleanup takes a stringed object and takes out extra commas from objects and arrays.
+ * @param outputString 
+ * @returns a string.
+ */
+function cleanup(outputString){
+    outputString = outputString.replaceAll(',]', ']')
+    outputString = outputString.replaceAll(',}', '}')
+    return outputString;
 }
 
 /**
- * @todo finish writing string-parsing algorithm for prettifying toString
- * @param {string} result
+ * @todo write string-parsing algorithm for prettifying toString
+ * @param {string} outputstring
  * @returns {string} 
  */
-function prettify(result){
-    result = result.replaceAll(',', ',\n')
-    result = result.replaceAll('{', '{\n    ')
-    result = result.replaceAll('}', '    }\n')
-    result = result.replaceAll('[', '[\n    ')
-    result = result.replaceAll(']', '    ]\n')
-    return result
+function prettify(outputString){
+    outputString = outputString.replaceAll(',', ',\n')
+    outputString = outputString.replaceAll('{', '{\n    ')
+    outputString = outputString.replaceAll('}', '    }\n')
+    outputString = outputString.replaceAll('[', '[\n    ')
+    outputString = outputString.replaceAll(']', '    ]\n')
+    return outputString
 }
 
 
