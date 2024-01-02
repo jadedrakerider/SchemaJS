@@ -1,11 +1,4 @@
-import { Schema,
-         ArrayType,
-         BooleanType,
-         IntegerType,
-         NulledType,
-         NumberType,
-         ObjectType,
-         StringType } from '../Schema.mjs'
+import { Schema } from '../Schema.mjs'
 import { expect, assert } from 'chai'
 import Ajv from "ajv";
 
@@ -82,6 +75,7 @@ describe('Schema mjs', () => {
             const schema = new Schema()
             schema.add('token', Schema.string)
             schema.add('Jenny', Schema.number)
+            console.log('test3: schema', schema)
         })
         counter++;
 
