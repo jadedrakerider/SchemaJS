@@ -262,20 +262,6 @@ function cleanup(outputString){
     return outputString;
 }
 
-/**
- * @todo write string-parsing algorithm for prettifying toString
- * @param {string} outputstring
- * @returns {string} 
- */
-function prettify(outputString){
-    outputString = outputString.replaceAll(',', ',\n')
-    outputString = outputString.replaceAll('{', '{\n    ')
-    outputString = outputString.replaceAll('}', '    }\n')
-    outputString = outputString.replaceAll('[', '[\n    ')
-    outputString = outputString.replaceAll(']', '    ]\n')
-    return outputString
-}
-
 module.exports = {
     Schema,
     ArrayType,
