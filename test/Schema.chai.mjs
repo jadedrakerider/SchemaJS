@@ -75,7 +75,6 @@ describe('Schema mjs', () => {
             const schema = new Schema()
             schema.add('token', Schema.string)
             schema.add('Jenny', Schema.number)
-            console.log('test3: schema', schema)
         })
         counter++;
 
