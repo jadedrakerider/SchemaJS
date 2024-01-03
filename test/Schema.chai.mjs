@@ -1,11 +1,4 @@
-import { Schema,
-         ArrayType,
-         BooleanType,
-         IntegerType,
-         NulledType,
-         NumberType,
-         ObjectType,
-         StringType } from '../Schema.mjs'
+import { Schema } from '../Schema.mjs'
 import { expect, assert } from 'chai'
 import Ajv from "ajv";
 
