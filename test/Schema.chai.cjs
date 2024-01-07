@@ -1,7 +1,7 @@
 const { Schema } = require('../Schema.cjs')
 const { expect, 
         assert } = require('chai')
-const Ajv = require('ajv');
+const Ajv = require('ajv')
 
 const o = {
     arr: ['str1', 'str2'],
@@ -17,7 +17,7 @@ const o = {
         nulled: null,
         str: 'another'
     }
-};
+}
 
 const unit = {
     'id': Schema.number,
@@ -81,16 +81,16 @@ describe('Schema cjs', () => {
         counter++;
 
         it(`Test ${counter}: Recognizes Types`, () => {
-            const schema = new Schema();
-            schema.add('arr', Schema.array);
-            schema.add('bool', Schema.boolean);
-            schema.add('number', Schema.number);
-            schema.add('nulled', Schema.nulled);
-            schema.add('str', Schema.string);
-            schema.add('subobject', Schema.object);
+            const schema = new Schema()
+            schema.add('arr', Schema.array)
+            schema.add('bool', Schema.boolean)
+            schema.add('number', Schema.number)
+            schema.add('nulled', Schema.nulled)
+            schema.add('str', Schema.string)
+            schema.add('subobject', Schema.object)
 
-            const validate = ajv.compile(schema);
-            const result = validate(o);
+            const validate = ajv.compile(schema)
+            const result = validate(o)
 
             expect(result).to.be.true;
         })
@@ -101,26 +101,36 @@ describe('Schema cjs', () => {
             unitSchema.addProfile(unit)
 
             const validate = ajv.compile(unitSchema)
-            const result = validate(unit);
+            const result = validate(unit)
 
             expect(result).to.be.true;
         })
         counter++;
-    });
-});
+    })
+})
 
+function schemaTest(description, schema, profile ){
+    it(`Test ${counter}: ${description} is valid`, () => {
+        const validate = ajv.compile(schema)
+        const result = validate(profile)
 
+        expect(result).to.be.true;
+    })
+    counter++;
+}
 
 
 
 
 /*
 describe('SUMMARY', () => {
-    it('Summary', () => {
+    describe('Summary', () => {
         it(`Test ${counter}: SUMMARY`, () => {
 
-        counter++;
         })
+        counter++;
+
+
     })
 })
 

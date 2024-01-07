@@ -1,5 +1,5 @@
 import { Schema } from '../Schema.mjs'
-import { expect, assert } from 'chai'
+import { expect } from 'chai'
 import Ajv from "ajv";
 
 const o = {
@@ -72,50 +72,52 @@ describe('Schema mjs', () => {
     })
 
     describe('Schema Constructor', () => {
-        it(`Test ${counter}: toString`, () => {
-            const schema = new Schema()
-            schema.add('token', Schema.string)
-            schema.add('Jenny', Schema.number)
-        })
-        counter++;
+        const tokenz = new Schema()
+        tokenz.add('token', Schema.string)
+        tokenz.add('Jenny', Schema.number)
 
-        it(`Test ${counter}: Recognizes Types`, () => {
-            const schema = new Schema();
-            schema.add('arr', Schema.array);
-            schema.add('bool', Schema.boolean);
-            schema.add('number', Schema.number);
-            schema.add('nulled', Schema.nulled);
-            schema.add('str', Schema.string);
-            schema.add('subobject', Schema.object);
+        schemaFail('Schema is failable', tokenz, {'damage': 1})
 
-            const validate = ajv.compile(schema);
-            const result = validate(o);
+        const oSchema = new Schema()
+        oSchema.add('arr', Schema.array)
+        oSchema.add('bool', Schema.boolean)
+        oSchema.add('number', Schema.number)
+        oSchema.add('nulled', Schema.nulled)
+        oSchema.add('str', Schema.string)
+        oSchema.add('subobject', Schema.object)
+        schemaTest('JS type recognition', oSchema, o)
 
-            expect(result).to.be.true;
-        })
-        counter++;
-
-        it(`Test ${counter}: Schema.addProfile(profile)`, () => {
-            const unitSchema = new Schema()
-            unitSchema.addProfile(unit)
-
-            const validate = ajv.compile(unitSchema)
-            const result = validate(unit);
-
-            expect(result).to.be.true;
-        })
-        counter++;
+        const unitSchema = new Schema()
+        unitSchema.addProfile(unit)    
+        schemaTest('Schema.addProfile()', unitSchema, unit)
     });
 });
 
+function schemaTest(description, schema, profile ){
+    it(`Test ${counter}: ${description} is valid`, () => {
+        const validate = ajv.compile(schema)
+        const result = validate(profile)
 
+        expect(result).to.be.true;
+    })
+    counter++;
+}
 
+function schemaFail(description, schema, profile ){
+    it(`Test ${counter}: ${description} is valid`, () => {
+        const validate = ajv.compile(schema)
+        const result = validate(profile)
+
+        expect(result).to.be.false;
+    })
+    counter++;
+}
 
 
 
 /*
 describe('SUMMARY', () => {
-    it('Summary', () => {
+    describe('SUMMARY', () => {
         it(`Test ${counter}: SUMMARY`, () => {
 
         counter++;
