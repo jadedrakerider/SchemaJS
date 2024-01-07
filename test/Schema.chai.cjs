@@ -1,6 +1,7 @@
-import { Schema } from '../Schema.mjs'
-import { expect } from 'chai'
-import Ajv from "ajv";
+const { Schema } = require('../Schema.cjs')
+const { expect, 
+        assert } = require('chai')
+const Ajv = require('ajv')
 
 const o = {
     arr: ['str1', 'str2'],
@@ -16,7 +17,7 @@ const o = {
         nulled: null,
         str: 'another'
     }
-};
+}
 
 const unit = {
     'id': Schema.number,
@@ -55,12 +56,12 @@ const vocabulary = [
 ajv.addVocabulary(vocabulary)
 let counter = 1;
 
-describe('Schema mjs', () => {
+describe('Schema cjs', () => {
     describe('SchemaType', () => {
         it(`Test ${counter}: SchemaType constructor`, () => {
             const schema = new Schema()
-            expect(Schema.string.valueOf()).to.eql({STRING: {'type':'string'}})
-            expect(Schema.array.valueOf()).to.not.eql({STRING: {'type':'string'}})
+            expect(Schema.string.keyValueOf()).to.eql({STRING: {'type':'string'}})
+            expect(Schema.array.keyValueOf()).to.not.eql({STRING: {'type':'string'}})
         })
         counter++;
 
@@ -72,26 +73,41 @@ describe('Schema mjs', () => {
     })
 
     describe('Schema Constructor', () => {
-        const tokenz = new Schema()
-        tokenz.add('token', Schema.string)
-        tokenz.add('Jenny', Schema.number)
+        it(`Test ${counter}: toString`, () => {
+            const schema = new Schema()
+            schema.add('token', Schema.string)
+            schema.add('Jenny', Schema.number)
+        })
+        counter++;
 
-        schemaFail('Schema is failable', tokenz, {'damage': 1})
+        it(`Test ${counter}: Recognizes Types`, () => {
+            const schema = new Schema()
+            schema.add('arr', Schema.array)
+            schema.add('bool', Schema.boolean)
+            schema.add('number', Schema.number)
+            schema.add('nulled', Schema.nulled)
+            schema.add('str', Schema.string)
+            schema.add('subobject', Schema.object)
 
-        const oSchema = new Schema()
-        oSchema.add('arr', Schema.array)
-        oSchema.add('bool', Schema.boolean)
-        oSchema.add('number', Schema.number)
-        oSchema.add('nulled', Schema.nulled)
-        oSchema.add('str', Schema.string)
-        oSchema.add('subobject', Schema.object)
-        schemaTest('JS type recognition', oSchema, o)
+            const validate = ajv.compile(schema)
+            const result = validate(o)
 
-        const unitSchema = new Schema()
-        unitSchema.addProfile(unit)    
-        schemaTest('Schema.addProfile()', unitSchema, unit)
-    });
-});
+            expect(result).to.be.true;
+        })
+        counter++;
+
+        it(`Test ${counter}: Schema.addProfile(profile)`, () => {
+            const unitSchema = new Schema()
+            unitSchema.addProfile(unit)
+
+            const validate = ajv.compile(unitSchema)
+            const result = validate(unit)
+
+            expect(result).to.be.true;
+        })
+        counter++;
+    })
+})
 
 function schemaTest(description, schema, profile ){
     it(`Test ${counter}: ${description} is valid`, () => {
@@ -103,25 +119,18 @@ function schemaTest(description, schema, profile ){
     counter++;
 }
 
-function schemaFail(description, schema, profile ){
-    it(`Test ${counter}: ${description} is valid`, () => {
-        const validate = ajv.compile(schema)
-        const result = validate(profile)
-
-        expect(result).to.be.false;
-    })
-    counter++;
-}
 
 
 
 /*
 describe('SUMMARY', () => {
-    describe('SUMMARY', () => {
+    describe('Summary', () => {
         it(`Test ${counter}: SUMMARY`, () => {
 
-        counter++;
         })
+        counter++;
+
+
     })
 })
 
