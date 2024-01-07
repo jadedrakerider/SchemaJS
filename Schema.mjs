@@ -21,66 +21,69 @@ const types = [
     { STRING: {'type': 'string'} }
 ];
 
+class SchemaType extends ExtEnum {
 /**
  * @class
  * @summary A Schematype is an Extended Enum corresponding to a data type found in a schema. 
  */
-class SchemaType extends ExtEnum {
+
     constructor(){
         super(types);
     }
 
     toString(){ 
-        return `${JSON.stringify(this.valueOf())}`
+        return `${JSON.stringify(this.valueOf(true))}`
     }
 }
 
+export class ArrayType extends SchemaType {
 /**
  * @class
  * @summary
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to an array.
  */
-export class ArrayType extends SchemaType {
+
     constructor(){
         super()
         this.select('ARRAY')
     }
 }
 
-/**
- * @class
- * @summary
- *      ArrayType is a pre-baked type of element found in a schema
- *      corresponding to a integer.
- */
+
 export class BooleanType extends SchemaType {
+/**
+* @class
+* @summary
+*      ArrayType is a pre-baked type of element found in a schema
+*      corresponding to a integer.
+*/
     constructor(){
         super()
         this.select('BOOLEAN')
     }
 }
 
+export class IntegerType extends SchemaType {
 /**
  * @class
  * @summary
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to an array.
  */
-export class IntegerType extends SchemaType {
     constructor(){
         super()
         this.select('INTEGER')
     }
 }
 
+export class NumberType extends SchemaType {
 /**
  * @class
  * @summary
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to a number.
  */
-export class NumberType extends SchemaType {
     constructor(){
         super()
         this.select('NUMBER')
@@ -94,38 +97,40 @@ export class NulledType extends SchemaType {
     }
 }
 
-/**
- * @class
- * @summary
- *      ArrayType is a pre-baked type of element found in a schema
- *      corresponding to an Object.
- */
-export class ObjectType extends SchemaType {
+
+export class ObjectType extends SchemaType {/**
+* @class
+* @summary
+*      ArrayType is a pre-baked type of element found in a schema
+*      corresponding to an Object.
+*/
     constructor(){
         super()
         this.select('OBJECT')
     }
 }
+
+export class StringType extends SchemaType { 
 /**
  * @class
  * @summary
  *      ArrayType is a pre-baked type of element found in a schema
  *      corresponding to a string.
  */
-export class StringType extends SchemaType {
+
     constructor(){
         super()
         this.select('STRING')
     }
 }
 
-/**
- * @class
- * @summary
- *      Schema is an object which outlines the data expected to find in
- *      an object.
- */
-export class Schema {    
+export class Schema {
+    /**
+     * @class
+     * @summary
+     *      Schema is an object which outlines the data expected to find in
+     *      an object.
+     */
 
     static array = new ArrayType()
     static boolean = new BooleanType()
@@ -244,6 +249,7 @@ export class Schema {
  
 }
 
+function cleanup(outputString){
 /**
  * @function cleanup
  * @summary
@@ -251,18 +257,17 @@ export class Schema {
  * @param outputString 
  * @returns a string.
  */
-function cleanup(outputString){
     outputString = outputString.replaceAll(',]', ']')
     outputString = outputString.replaceAll(',}', '}')
     return outputString;
 }
 
+function prettify(outputString){
 /**
  * @todo write string-parsing algorithm for prettifying toString
  * @param {string} outputstring
  * @returns {string} 
  */
-function prettify(outputString){
     outputString = outputString.replaceAll(',', ',\n')
     outputString = outputString.replaceAll('{', '{\n    ')
     outputString = outputString.replaceAll('}', '    }\n')

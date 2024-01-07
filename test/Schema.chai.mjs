@@ -59,8 +59,8 @@ describe('Schema mjs', () => {
     describe('SchemaType', () => {
         it(`Test ${counter}: SchemaType constructor`, () => {
             const schema = new Schema()
-            expect(Schema.string.keyValueOf()).to.eql({STRING: {'type':'string'}})
-            expect(Schema.array.keyValueOf()).to.not.eql({STRING: {'type':'string'}})
+            expect(Schema.string.valueOf()).to.eql({STRING: {'type':'string'}})
+            expect(Schema.array.valueOf()).to.not.eql({STRING: {'type':'string'}})
         })
         counter++;
 
