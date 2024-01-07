@@ -66,6 +66,7 @@ describe('Schema mjs', () => {
 
         it(`Test ${counter}: SchemaType.toString()`, () => {
             expect(Schema.string.toString()).to.eql('{"type":"string"}')
+            expect(Schema.string.toString()).to.not.eql('{"type":"array"}')
         })
         counter++;
     })
