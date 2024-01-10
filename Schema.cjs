@@ -255,6 +255,6 @@ module.exports = {
     NulledType,
     NumberType,
     ObjectType,
-    StringType,
+    StringType
 }
 
