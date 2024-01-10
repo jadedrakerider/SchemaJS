@@ -41,9 +41,6 @@ class SchemaType extends ExtEnum {
 class ArrayType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to an array.
      */
 
     constructor() {
@@ -55,9 +52,6 @@ class ArrayType extends SchemaType {
 class BooleanType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to a integer.
      */
     constructor() {
         super();
@@ -68,9 +62,6 @@ class BooleanType extends SchemaType {
 class IntegerType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to an array.
      */
     constructor() {
         super();
@@ -81,9 +72,6 @@ class IntegerType extends SchemaType {
 class NumberType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to a number.
      */
     constructor() {
         super();
@@ -101,9 +89,6 @@ class NulledType extends SchemaType {
 class ObjectType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to an Object.
      */
     constructor() {
         super();
@@ -114,9 +99,6 @@ class ObjectType extends SchemaType {
 class StringType extends SchemaType {
     /**
      * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to a string.
      */
 
     constructor() {
@@ -263,6 +245,8 @@ function cleanup(outputString) {
     return outputString;
 }
 
+// end SchemaJS
+
 module.exports = {
     Schema,
     ArrayType,
@@ -274,4 +258,3 @@ module.exports = {
     StringType,
 }
 
-// end SchemaJS

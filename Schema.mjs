@@ -24,7 +24,8 @@ const types = [
 class SchemaType extends ExtEnum {
 /**
  * @class
- * @summary A Schematype is an Extended Enum corresponding to a data type found in a schema. 
+ * @summary A Schematype is an Extended Enum corresponding 
+ *      to a data type found in a schema. 
  */
 
     constructor(){
@@ -39,9 +40,6 @@ class SchemaType extends ExtEnum {
 class ArrayType extends SchemaType {
 /**
  * @class
- * @summary
- *      ArrayType is a pre-baked type of element found in a schema
- *      corresponding to an array.
  */
 
     constructor(){
@@ -53,9 +51,6 @@ class ArrayType extends SchemaType {
 class BooleanType extends SchemaType {
 /**
 * @class
-* @summary
-*      ArrayType is a pre-baked type of element found in a schema
-*      corresponding to a integer.
 */
     constructor(){
         super()
@@ -66,9 +61,6 @@ class BooleanType extends SchemaType {
 class IntegerType extends SchemaType {
 /**
  * @class
- * @summary
- *      ArrayType is a pre-baked type of element found in a schema
- *      corresponding to an array.
  */
     constructor(){
         super()
