@@ -36,7 +36,7 @@ class SchemaType extends ExtEnum {
     }
 }
 
-export class ArrayType extends SchemaType {
+class ArrayType extends SchemaType {
 /**
  * @class
  * @summary
@@ -50,8 +50,7 @@ export class ArrayType extends SchemaType {
     }
 }
 
-
-export class BooleanType extends SchemaType {
+class BooleanType extends SchemaType {
 /**
 * @class
 * @summary
@@ -64,7 +63,7 @@ export class BooleanType extends SchemaType {
     }
 }
 
-export class IntegerType extends SchemaType {
+class IntegerType extends SchemaType {
 /**
  * @class
  * @summary
@@ -77,7 +76,7 @@ export class IntegerType extends SchemaType {
     }
 }
 
-export class NumberType extends SchemaType {
+class NumberType extends SchemaType {
 /**
  * @class
  * @summary
@@ -90,15 +89,14 @@ export class NumberType extends SchemaType {
     }
 }
 
-export class NulledType extends SchemaType {
+class NulledType extends SchemaType {
     constructor(){
         super()
         this.select('NULL')
     }
 }
 
-
-export class ObjectType extends SchemaType {/**
+class ObjectType extends SchemaType {/**
 * @class
 * @summary
 *      ArrayType is a pre-baked type of element found in a schema
@@ -110,7 +108,7 @@ export class ObjectType extends SchemaType {/**
     }
 }
 
-export class StringType extends SchemaType { 
+class StringType extends SchemaType { 
 /**
  * @class
  * @summary
@@ -124,7 +122,7 @@ export class StringType extends SchemaType {
     }
 }
 
-export class Schema {
+class Schema {
     /**
      * @class
      * @summary
@@ -276,4 +274,13 @@ function prettify(outputString){
     return outputString
 }
 
-
+export {
+    ArrayType,
+    BooleanType,
+    IntegerType,
+    NulledType,
+    NumberType,
+    ObjectType,
+    StringType,
+    Schema
+}

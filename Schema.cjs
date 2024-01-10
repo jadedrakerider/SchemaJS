@@ -272,6 +272,6 @@ module.exports = {
     NumberType,
     ObjectType,
     StringType,
-};
+}
 
 // end SchemaJS
