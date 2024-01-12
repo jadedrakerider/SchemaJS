@@ -274,5 +274,12 @@ export {
     NumberType,
     ObjectType,
     StringType,
-    Schema
+    Schema,
+    Array,
+    Boolean,
+    Integer,
+    Nulled,
+    Number,
+    Object,
+    String,
 }
