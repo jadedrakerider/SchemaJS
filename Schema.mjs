@@ -239,6 +239,17 @@ class Schema {
  
 }
 
+const ArraySchema = new Schema()
+ArraySchema.type = 'array'
+
+const array = Schema.array.valueOf()
+const boolean = Schema.boolean.valueOf()
+const integer = Schema.integer.valueOf()
+const number = Schema.number.valueOf()
+const nulled = Schema.nulled.valueOf()
+const object = Schema.object.valueOf()
+const string = Schema.string.valueOf()
+
 function cleanup(outputString){
 /**
  * @function cleanup
@@ -275,6 +286,7 @@ export {
     ObjectType,
     StringType,
     Schema,
+    ArraySchema,
     Array,
     Boolean,
     Integer,
