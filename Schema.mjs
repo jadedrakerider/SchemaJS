@@ -122,13 +122,13 @@ class Schema {
      *      an object.
      */
 
-    static array = new ArrayType()
-    static boolean = new BooleanType()
-    static integer = new IntegerType()
-    static number = new NumberType()
-    static nulled = new NulledType()
-    static object = new ObjectType()
-    static string = new StringType()
+    static array = array.v()
+    static boolean = boolean.v()
+    static integer = integer.v()
+    static number = number.v()
+    static nulled = nulled.v()
+    static object = object.v()
+    static string = string.v()
 
     constructor() {
         /**
