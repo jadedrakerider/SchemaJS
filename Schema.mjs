@@ -278,20 +278,6 @@ function prettify(outputString){
 }
 
 export {
-    ArrayType,
-    BooleanType,
-    IntegerType,
-    NulledType,
-    NumberType,
-    ObjectType,
-    StringType,
     Schema,
-    ArraySchema,
-    array,
-    boolean,
-    integer,
-    nulled,
-    number,
-    object,
-    string,
+    ArraySchema
 }
