@@ -8,18 +8,18 @@
  *      so now you don't have to. IN ES6!!!
  */
 
-'use strict';
+'use strict'
 import { ExtEnum } from './ENUMJS/ENUM.mjs'
 
 const types = [
+    { OBJECT: {'type': 'object'} },
     { ARRAY: {'type': 'array'} },
     { BOOLEAN: {'type': 'boolean'} },
     { INTEGER: {'type': 'integer'} },
     { NUMBER: {'type': 'number'} },
     { NULL: {'type': 'null'} },
-    { OBJECT: {'type': 'object'} },
     { STRING: {'type': 'string'} }
-];
+]
 
 class SchemaType extends ExtEnum {
 /**
@@ -29,7 +29,7 @@ class SchemaType extends ExtEnum {
  */
 
     constructor(){
-        super(types);
+        super(types)
     }
 
     toString(){ 
@@ -88,12 +88,13 @@ class NulledType extends SchemaType {
     }
 }
 
-class ObjectType extends SchemaType {/**
-* @class
-* @summary
-*      ArrayType is a pre-baked type of element found in a schema
-*      corresponding to an Object.
-*/
+class ObjectType extends SchemaType {
+    /**
+    * @class
+    * @summary
+    *      ArrayType is a pre-baked type of element found in a schema
+    *      corresponding to an Object.
+    */
     constructor(){
         super()
         this.select('OBJECT')
@@ -113,6 +114,16 @@ class StringType extends SchemaType {
         this.select('STRING')
     }
 }
+
+
+
+const array = new ArrayType()
+const boolean = new BooleanType()
+const integer = new IntegerType()
+const number = new NumberType()
+const nulled = new NulledType()
+const object = new ObjectType()
+const string = new StringType()
 
 class Schema {
     /**
@@ -144,11 +155,12 @@ class Schema {
          *      class. This is where the expectations of required are 
          *      defined.
         */
-        this.type = "object";
-        this.required = [];
-        this.properties = {};
+        this.type = 'object'
+        this.required = []
+        this.properties = {}
     }
 
+    add(str, type){
     /**
      * @method add
      * @param {string} str 
@@ -156,11 +168,11 @@ class Schema {
      * @summary
      *      Adds the name of a field and its type to the schema.
      */
-    add(str, type){
-        this.required.push(str);
-        this.properties[str] = type;
+    this.required.push(str)
+        this.properties[str] = type
     }
 
+    addProfile(profile){
     /**
      * @method addProfile
      * @param {Object<SchemaType>} profile 
@@ -168,87 +180,85 @@ class Schema {
      *      Takes a collection of SchemaTypes collected into an
      *      object and assigns them where they need to be.
      */
-    addProfile(profile){
-        Object.keys(profile).forEach((field)=>{
+    Object.keys(profile).forEach((field)=>{
             this.add(field, profile[field])
         })
     }
 
+    toString( pretty=false ){
     /**
      * @method toString
      * @param {boolean} pretty 
      * @returns {string}
      *      Returns a string in either a human-readable format (if pretty == true)
      */
-    toString( pretty=false ){
-        let outputString = '';
-        const schema = 'Schema {';
-        const required = '"required": [';
-        const closeBracket = '],';
-        const properties = `"properties": {`;
-        const closeBrace = '}';
-        const ntab = '\n    ';
-        const tab = '    ';
+    let outputString = ''
+        const schema = 'Schema {'
+        const required = `'required': [`
+        const closeBracket = '],'
+        const properties = `'properties': {`
+        const closeBrace = '}'
+        const ntab = '\n    '
+        const tab = '    '
 
         pretty ? outputString += schema + ntab
-               : outputString += schema;
+               : outputString += schema
 
-        pretty ? outputString += `"type": "${this.type}", ` + ntab
-               : outputString += `"type": "${this.type}", `;
+        pretty ? outputString += `'type': '${this.type}', ` + ntab
+               : outputString += `'type': '${this.type}', `
 
         pretty ? outputString += ntab + required
-               : outputString += required;
+               : outputString += required
 
         if(pretty){
             outputString += ntab
             this.required.forEach(element => {
-                outputString += tab + `"${element}",` + ntab;
+                outputString += tab + `'${element}',` + ntab
             })
         } else {
             this.required.forEach(element => {
-                outputString += `"${element}",`;
+                outputString += `'${element}',`
             })
         }
 
         pretty ? outputString += closeBracket + ntab
-               : outputString += closeBracket;
+               : outputString += closeBracket
 
 
         pretty ? outputString += properties + ntab
-               : outputString += properties;
+               : outputString += properties
 
         if(pretty){
             for( const [key, value] of Object.entries(this.properties)){
-                outputString += ntab + `"${key}": "${value}",` + ntab;
+                outputString += ntab + `'${key}': '${value}',` + ntab
             }
         } else {
             for( const [key, value] of Object.entries(this.properties)){
-                outputString += `"${key}": "${value}",`;
+                outputString += `'${key}': '${value}',`
             }
         }
 
         pretty ? outputString += closeBrace + ntab
-               : outputString += closeBrace;
+               : outputString += closeBrace
         
-        outputString += closeBrace;
+        outputString += closeBrace
 
-        outputString = cleanup(outputString);
+        outputString = cleanup(outputString)
 
-        return outputString;
+        return outputString
     }
- 
+
+    t(){
+        return this.typeOf()
+    }
+
+    typeOf(){
+        return this.type
+    }
 }
 
 const ArraySchema = new Schema()
 ArraySchema.type = 'array'
-
-const array = Schema.array.valueOf()
-const boolean = Schema.boolean.valueOf()
-const integer = Schema.integer.valueOf()
-const number = Schema.number.valueOf()
-const nulled = Schema.nulled.valueOf()
-const object = Schema.object.valueOf()
-const string = Schema.string.valueOf()
 
 function cleanup(outputString){
 /**
@@ -260,15 +270,15 @@ function cleanup(outputString){
  */
     outputString = outputString.replaceAll(',]', ']')
     outputString = outputString.replaceAll(',}', '}')
-    return outputString;
+    return outputString
 }
 
 function prettify(outputString){
-/**
- * @todo write string-parsing algorithm for prettifying toString
- * @param {string} outputstring
- * @returns {string} 
- */
+    /**
+     * @todo write string-parsing algorithm for prettifying toString
+     * @param {string} outputstring
+     * @returns {string} 
+     */
     outputString = outputString.replaceAll(',', ',\n')
     outputString = outputString.replaceAll('{', '{\n    ')
     outputString = outputString.replaceAll('}', '    }\n')
@@ -278,6 +288,7 @@ function prettify(outputString){
 }
 
 export {
+    SchemaType,
     Schema,
     ArraySchema
 }
