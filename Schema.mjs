@@ -141,7 +141,7 @@ class Schema {
     static object = object.v()
     static string = string.v()
 
-    constructor() {
+    constructor(obj=null) {
         /**
          * @property {string} type 
          *      a string which names the expected type of data. Objects 
@@ -156,8 +156,11 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
+        this.name = 'standard Schema '
         this.required = []
         this.properties = {}
+
+        this.addProfile(obj)
     }
 
     add(str, type){
@@ -172,20 +175,24 @@ class Schema {
         this.properties[str] = type
     }
 
-    addProfile(profile){
+    addProfile(profile=null){
     /**
      * @method addProfile
-     * @param {Object<SchemaType>} profile 
+     * @param { Object<SchemaType> } profile 
      * @summary
      *      Takes a collection of SchemaTypes collected into an
      *      object and assigns them where they need to be.
      */
-    Object.keys(profile).forEach((field)=>{
-            this.add(field, profile[field])
+    if(profile === null){
+        return
+    }
+
+    Object.keys(profile).forEach((key) => {
+            this.add(key, profile[key])
         })
     }
 
-    toString( pretty=false ){
+    toString(pretty=false){
     /**
      * @method toString
      * @param {boolean} pretty 
@@ -255,10 +262,37 @@ class Schema {
     typeOf(){
         return this.type
     }
+
+    v(){
+        return this.valueOf()
+    }
+
+    valueOf(){
+        return {
+            required: this.required,
+            type: this.type,
+            properties: this.properties
+        }
+    }
+
+    vocabulary(){
+        let result = new Set(['name'])
+
+        // Object.keys(this).forEach(key => {
+        //     result.push(key)
+        // })
+
+        this.required.forEach(field => {
+            result.add(field)
+        })
+
+        return result
+    }
 }
 
 const ArraySchema = new Schema()
 ArraySchema.type = 'array'
+ArraySchema.name = 'array schema '
 
 function cleanup(outputString){
 /**
