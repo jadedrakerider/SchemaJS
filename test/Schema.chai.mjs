@@ -116,31 +116,6 @@ describe('Schema mjs', () => {
         })
         count()
 
-        it(`${getCounter()} Schema pattern works`, () => {
-            const schema = {
-                type: 'object',
-                properties: {
-                  user_id: {type: 'number'},
-                  access_token: {type: 'string'}
-                },
-                required: ['user_id', 'access_token'],
-            }
-
-            const validate = ajv.compile(schema)
-            let valid
-
-            const response = {
-                user_id: 1,
-                access_token: 'asdf'
-            }
-
-            valid = validate(response)
-            if (!valid) console.log(validate.errors)
-
-            expect(valid).to.be.true
-        })
-        count()
-
         it(`${getCounter()} Schema class works with AJV`, () => {
             /**
              * @todo
@@ -189,6 +164,7 @@ describe('Schema mjs', () => {
 
             const sessionSchema = new Schema(sessionProfile)
             sessionSchema.required.push('foo')
+            sessionSchema.properties['bar'] = Schema.string
 
             sessionSchema.vocabulary().forEach(word => {
                 vocabulary.add(word)
@@ -205,8 +181,34 @@ describe('Schema mjs', () => {
             valid = ajv.validate(sessionResponse)
 
             console.log('validate:', validate)
+            // console.log('validate.schema.required', validate.schema.required)
 
             expect(valid).to.be.false
+        })
+        count()
+
+        it(`${getCounter()} Schema pattern works`, () => {
+            const schema = {
+                type: 'object',
+                properties: {
+                  user_id: {type: 'number'},
+                  access_token: {type: 'string'}
+                },
+                required: ['user_id', 'access_token'],
+            }
+
+            const validate = ajv.compile(schema)
+            let valid
+
+            const response = {
+                user_id: 1,
+                access_token: 'asdf'
+            }
+
+            valid = validate(response)
+            if (!valid) console.log(validate.errors)
+
+            expect(valid).to.be.true
         })
         count()
     })
