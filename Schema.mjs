@@ -277,7 +277,7 @@ class Schema {
         }
     }
 
-    vocabulary(){
+    keywords(){
         let result = new Set([]) //'name']) // name is throwing off ajv
 
         // Object.keys(this).forEach(key => {

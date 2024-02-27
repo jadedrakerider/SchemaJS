@@ -87,9 +87,6 @@ describe('AJV setup', () => {
 
     it(`${getCounter()} AJV boilerplate with session data`, () => {
         const boilerplate = () => {
-            /**
-             * Put inside an anonymous function so that the scope is limited.
-             */
             const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
             const schema = {
@@ -101,10 +98,6 @@ describe('AJV setup', () => {
                 required: ['user_id', 'access_token'],
                 additionalProperties: false
             }
-
-            const vocabulary = new Set(['user_id', 'access_token'])
-
-            console.log('schema:', schema)
 
             const validate = ajv.compile(schema)
 
@@ -121,15 +114,15 @@ describe('AJV setup', () => {
     })
     count()
 
-    it(`${getCounter()} Schema is failable by AJV`, () => {
+    it(`${getCounter()} session data and boilerplate, and with Schema class`, () => {
         const ajv = new Ajv()
-        // const keywords = ['user_id', 'access_token']
-        // keywords.forEach(keyword => {
-        //     ajv.addKeyword(keyword);
-        // });
+        const keywords = ['user_id', 'access_token']
+        keywords.forEach(keyword => {
+            ajv.addKeyword(keyword);
+        });
         
 
-        const session = { // Data, the subject
+        const subject = { // Data, the subject
             user_id: 0,
             access_token: "adfa"
         }
@@ -139,96 +132,74 @@ describe('AJV setup', () => {
             access_token: Schema.string
         }
 
-        const vocabulry = new Set(['user_id','access_token'])
+        let target = new Schema(scheme) // Schema, the target
 
-        let schema = new Schema(scheme) // Schema, the target
-        schema = schema.valueOf()
+        const validate = ajv.compile(target.v())
 
-        const validate = ajv.compile(schema)
-
-        const valid = ajv.validate(session)
+        const valid = ajv.validate(subject)
 
         expect(valid).to.be.true
-
-
-
     })
     count()
 
-    // it(`${getCounter()} Schema pattern works`, () => {
-    //     const schemaPattern = () => {
-    //         const schema = {
-    //             type: 'object',
-    //             properties: {
-    //                 user_id: {type: 'number'},
-    //                 access_token: {type: 'string'}
-    //             },
-    //             required: ['user_id', 'access_token'],
-    //         }
+    it(`${getCounter()} addKeywords function works`, () => {
+        const ajv = new Ajv()        
 
-    //         const validate = ajv.compile(schema)
-    //         let valid
+        const subject = { // Data, the subject
+            taci: 0,
+            turn: "adfa"
+        }
 
-    //         const response = {
-    //             user_id: 1,
-    //             access_token: 'asdf'
-    //         }
+        const scheme = {
+            taci: Schema.number, 
+            turn: Schema.string
+        }
 
-    //         valid = validate(response)
-    //         if (!valid) console.log(validate.errors)
+        const target = new Schema(scheme) // Schema, the target
 
-    //         expect(valid).to.be.true
-    //     }
-    //     schemaPattern()
-    // })
-    // count()
-    
-    // it(`${getCounter()} Schema class works with AJV`, () => {
-    //     /**
-    //      * @todo
-    //      *      figure out why AJV is not looking for a field I added to required
-    //      */
-    //     const schemaClassWorksWithAjv = () => {
-            
-    //         const ajv = new Ajv()
+        compileKeywords(ajv, target)
+        
+        const valid = ajv.validate(subject)
 
-    //         const sessionResponse = {
-    //             access_token: 'aaa',
-    //             user_id: 0
-    //         }
+        expect(valid).to.be.true
+    })
+    count()
 
-    //         const sessionProfile = {
-    //             access_token: Schema.string,
-    //             user_id: Schema.number
-    //         }
-
-    //         const sessionSchema = new Schema(sessionProfile)
-
-    //         sessionSchema.vocabulary().forEach(word => {
-    //             vocabulary.add(word)
-    //         })
-
-    //         ajv.addVocabulary(vocabulary)
-
-    //         validate = ajv.compile(sessionSchema.v())
-    //         valid = ajv.validate(sessionResponse)
-    //         if (!valid) console.log(validate.errors)
-
-    //         expect(valid).to.be.true
-    //     }
-    //     schemaClassWorksWithAjv()
-    // })
-    // count()
-
-    
-
+    describe('Schema mjs', () => {
+            describe(`SchemaType is {type: 'object'} by default.`, () => {
+                const schemaType = new SchemaType().v()
+        
+                SchemaTypeValue(schemaType, {type:'object'})
+                SchemaTypeValue(Schema.object, {type:'object'})
+            })
+        
+            describe(`Schema constructor`, () => {
+                const schema = new Schema()
+                const keys = Object.keys(schema)
+                const properties = ['type','required','properties','additionalProperties']
+        
+                for( let i = 0 ; i < keys.length ; i++){
+                    valueMatch(keys[i],properties[i])
+                }
+            })
+        
+            describe(`Schema type properties are correct`, () => {
+                const arraySchema = ArraySchema
+                const generic = new Schema()
+        
+                SchemaTypeProperty(arraySchema, Schema.array.type)
+                SchemaTypeProperty(arraySchema, Schema.number.type, false)
+                SchemaTypeProperty(generic, Schema.object.type)
+                SchemaTypeProperty(generic, Schema.boolean.type, false)
+            })
+        })
 })
 
-function compileVocabulary(schema){
-    const schemaVocab = new Set(schema.vocabulary())
+function compileKeywords(ajv, schema){
+    const schemaKeywords = new Set(schema.keywords())
 
-    schemaVocab.forEach(term => {
-        vocabulary.push(term)
+    schemaKeywords.forEach(term => {
+        ajv.addKeyword(term)
     })
 }
 
