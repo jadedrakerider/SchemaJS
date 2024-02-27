@@ -156,9 +156,10 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
-        this.name = 'standard Schema '
+        // this.name = 'standard Schema ' // for outputting in typeof in place of 'Object'
         this.required = []
         this.properties = {}
+        this.additionalProperties = false;
 
         this.addProfile(obj)
     }
@@ -271,12 +272,13 @@ class Schema {
         return {
             required: this.required,
             type: this.type,
-            properties: this.properties
+            properties: this.properties,
+            additionalProperties: this.additionalProperties
         }
     }
 
     vocabulary(){
-        let result = new Set(['name'])
+        let result = new Set([]) //'name']) // name is throwing off ajv
 
         // Object.keys(this).forEach(key => {
         //     result.push(key)
@@ -292,7 +294,7 @@ class Schema {
 
 const ArraySchema = new Schema()
 ArraySchema.type = 'array'
-ArraySchema.name = 'array schema '
+// ArraySchema.name = 'array Schema '
 
 function cleanup(outputString){
 /**
