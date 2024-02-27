@@ -294,7 +294,6 @@ class Schema {
 
 const ArraySchema = new Schema()
 ArraySchema.type = 'array'
-// ArraySchema.name = 'array Schema '
 
 function cleanup(outputString){
 /**
