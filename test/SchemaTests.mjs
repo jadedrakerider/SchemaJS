@@ -5,11 +5,17 @@ import {
  } from '../Schema.mjs'
 // chaiFunctions.mjs are my personal tests for use with all chai projects
  import {
+    did,
+    does,
+    have,
+    is,
+    matches,
     getCounter,
     count,
     valueMatch,
-    have,
-    is
+    objectsMatch,
+    throwsError,
+    nullCheck
 } from './ChaiFunctions/chaiFunctions.mjs'
 import { expect } from 'chai'
 import Ajv from 'ajv'
@@ -38,7 +44,7 @@ function SchemaTypeValue(SchemaType, obj, bool=true){
 }
 
 function SchemaTypeProperty(schema, type, bool=true){
-    it(`${getCounter()} ${schema.name} ${have(bool)} type: '${type}'`, () => {
+    it(getCounter() + schema.name + is(bool) + `type: '${type}'`, () => {
         bool
             ? expect(schema.type).to.eql(type)
             : expect(schema.type).to.not.eql(type)
