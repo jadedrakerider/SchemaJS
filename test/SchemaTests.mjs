@@ -52,8 +52,28 @@ function SchemaTypeProperty(schema, type, bool=true){
     count()
 }
 
+function schemaCorresponds(subject, target, bool=true){
+    const description = getCounter() + `schema subject and target correspond`
+
+    it(description, () => {
+        const ajv = new Ajv()
+
+        compileKeywords(subject)
+
+        const validate = ajv.compile(target)
+
+        const valid = ajv.validate(subject)
+
+        bool
+            ? expect(valid).to.be.true
+            : expect(valid).to.be.false
+    })
+    count()
+}
+
 export {
     compileKeywords,
     SchemaTypeValue,
-    SchemaTypeProperty
+    SchemaTypeProperty,
+    schemaCorresponds
 }

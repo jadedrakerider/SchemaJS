@@ -301,6 +301,7 @@ describe('AJV Verification', () => {
         it(getCounter() + 'Schema evaluation is failable', () => {
             let valid
             const ajv = new Ajv()
+            ajv.addKeyword('name')
             const subject = {
                 jack: 'be quick',
                 jill: [1]
