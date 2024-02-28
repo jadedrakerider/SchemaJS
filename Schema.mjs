@@ -281,7 +281,7 @@ class Schema {
         let result = new Set([]) //'name']) // name is throwing off ajv
 
         // Object.keys(this).forEach(key => {
-        //     result.push(key)
+        //     result.add(key)
         // })
 
         this.required.forEach(field => {
