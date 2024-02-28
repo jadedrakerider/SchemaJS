@@ -280,10 +280,6 @@ class Schema {
     keywords(){
         let result = new Set([]) //'name']) // name is throwing off ajv
 
-        // Object.keys(this).forEach(key => {
-        //     result.add(key)
-        // })
-
         this.required.forEach(field => {
             result.add(field)
         })
