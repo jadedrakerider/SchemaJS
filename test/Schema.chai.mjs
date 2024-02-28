@@ -27,20 +27,21 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        valueMatch(Schema.array.v(), {type: 'array'})
-        valueMatch(Schema.boolean.v(), {type: 'boolean'})
-        valueMatch(Schema.integer.v(), {type: 'integer'})
-        valueMatch(Schema.object.v(), {type: 'object'})
-        valueMatch(Schema.nulled.v(), {type: 'null'})
-        valueMatch(Schema.string.v(), {type: 'string'})
-        valueMatch(Schema.number.v(), {type: 'number'})
+        valueMatch(Schema.array, {type: 'array'})
+        valueMatch(Schema.boolean, {type: 'boolean'})
+        valueMatch(Schema.integer, {type: 'integer'})
+        valueMatch(Schema.object, {type: 'object'})
+        valueMatch(Schema.nulled, {type: 'null'})
+        valueMatch(Schema.string, {type: 'string'})
+        valueMatch(Schema.number, {type: 'number'})
     })
 
     describe(`SchemaType is {type: 'object'} by default.`, () => {
-        const schemaType = new SchemaType().v()
+        const schemaType = new SchemaType()
+        const schemaT = schemaType.v()
 
-        SchemaTypeValue(schemaType, {type:'object'})
-        SchemaTypeValue(Schema.object.v(), {type:'object'})
+        SchemaTypeValue(schemaT, {type:'object'})
+        SchemaTypeValue(Schema.object, {type:'object'})
     })
 
     describe('Schema constructor', () => {
@@ -56,9 +57,9 @@ describe('Schema mjs', () => {
     describe('Schema type properties are correct', () => {
         const arraySchema = ArraySchema
         const generic = new Schema()
-        const array = Schema.array.v().type
-        const object = Schema.object.v().type
-        const boolean = Schema.boolean.v().type
+        const array = Schema.array.type
+        const object = Schema.object.type
+        const boolean = Schema.boolean.type
 
         SchemaTypeProperty(arraySchema, array)
         SchemaTypeProperty(arraySchema, object, false)
@@ -76,8 +77,6 @@ describe('AJV Verification', () => {
                  */
                 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-                // console.log('Schema.string =', Schema.string.v())
-
                 const schema = {
                     type: 'object',
                     properties: {
@@ -87,8 +86,6 @@ describe('AJV Verification', () => {
                     required: ['foo'],
                     additionalProperties: false
                 }
-
-                const vocabulary = new Set(['foo', 'bar'])
 
                 const validate = ajv.compile(schema)
 
@@ -104,6 +101,7 @@ describe('AJV Verification', () => {
             boilerplate()
         })
         count()
+
         it(getCounter() + 'AJV boilerplate is failable', () => {
             const boilerplate = () => {
                 /**
@@ -130,7 +128,6 @@ describe('AJV Verification', () => {
 
                 const valid = validate(data)
                 expect(valid).to.be.false
-                // if (!valid) {console.log(validate.errors)}
             }
             boilerplate()
         })
@@ -144,7 +141,7 @@ describe('AJV Verification', () => {
                     type: 'object',
                     properties: {
                         foo: {type: 'integer'},
-                        bar: Schema.string.v()
+                        bar: Schema.string
                     },
                     required: ['foo', 'turbo'],
                     additionalProperties: false
@@ -160,10 +157,7 @@ describe('AJV Verification', () => {
                 const valid = validate(data)
                 expect(valid).to.be.false
             }
-
             failable()
-
-            
         })
         count()
 
@@ -175,7 +169,7 @@ describe('AJV Verification', () => {
                     type: 'object',
                     properties: {
                         foo: {type: 'integer'},
-                        bar: Schema.array.v()
+                        bar: Schema.array
                     },
                     required: ['foo', 'turbo'],
                     additionalProperties: false
@@ -191,10 +185,7 @@ describe('AJV Verification', () => {
                 const valid = validate(data)
                 expect(valid).to.be.false
             }
-
-            failable()
-
-            
+            failable()            
         })
         count()
 
@@ -205,14 +196,12 @@ describe('AJV Verification', () => {
                 const schema = {
                     type: 'object',
                     properties: {
-                        user_id: Schema.number.v(),
-                        access_token: Schema.string.v()
+                        user_id: Schema.number,
+                        access_token: Schema.string
                     },
                     required: ['user_id', 'access_token'],
                     additionalProperties: false
                 }
-
-                // console.log('schema.properties.user_id', schema.properties.user_id)
 
                 const validate = ajv.compile(schema)
 
@@ -251,8 +240,7 @@ describe('AJV Verification', () => {
                 }
 
                 const valid = validate(data)
-                expect(valid).to.be.true
-                if (!valid) {console.log(validate.errors)}
+                expect(valid).to.be.false
             }
             boilerplate()
         })
@@ -262,11 +250,10 @@ describe('AJV Verification', () => {
     describe('AJV evaluates Schema class successfully',() => {
         it(getCounter() + `session data and boilerplate, and with Schema class`, () => {
             const ajv = new Ajv()
-            const keywords = ['user_id', 'access_token']
+            const keywords = ['user_id', 'access_token', 'name']
             keywords.forEach(keyword => {
                 ajv.addKeyword(keyword);
             });
-            
 
             const subject = { // Data, the subject
                 user_id: 0,
@@ -274,13 +261,13 @@ describe('AJV Verification', () => {
             }
 
             const scheme = {
-                user_id: Schema.number.v(),
-                access_token: Schema.string.v()
+                user_id: Schema.number,
+                access_token: Schema.string
             }
 
             let target = new Schema(scheme) // Schema, the target
 
-            const validate = ajv.compile(target.v())
+            const validate = ajv.compile(target)
 
             const valid = ajv.validate(subject)
 
@@ -297,8 +284,8 @@ describe('AJV Verification', () => {
             }
 
             const scheme = {
-                taci: Schema.number.v(), 
-                turn: Schema.string.v()
+                taci: Schema.number, 
+                turn: Schema.string
             }
 
             const target = new Schema(scheme) // Schema, the target
@@ -312,19 +299,21 @@ describe('AJV Verification', () => {
         count()
 
         it(getCounter() + 'Schema evaluation is failable', () => {
+            let valid
             const ajv = new Ajv()
             const subject = {
                 jack: 'be quick',
                 jill: [1]
             }
-            const target = new Schema({jack: Schema.string.v(), jill: Schema.string.v()})
-            let valid
+            const target = {
+                jack: Schema.string,
+                jill: Schema.string
+            }
+            const schema = new Schema(target)
 
-            compileKeywords(ajv, target)
+            compileKeywords(ajv, schema)
 
-            valid = ajv.validate(subject)
-
-            // console.log('ajv', ajv)
+            valid = ajv.validate(schema)
 
             expect(valid).to.be.false
         })
