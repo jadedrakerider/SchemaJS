@@ -156,7 +156,7 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
-        // this.name = 'standard Schema ' // for outputting in typeof in place of 'Object'
+        this.name = 'standard Schema ' // for outputting in typeof in place of 'Object'
         this.required = []
         this.properties = {}
         this.additionalProperties = false;
@@ -278,7 +278,7 @@ class Schema {
     }
 
     keywords(){
-        let result = new Set([]) //'name']) // name is throwing off ajv
+        let result = new Set(['name']) // name is throwing off ajv trying again ...
 
         // Object.keys(this).forEach(key => {
         //     result.push(key)
@@ -293,6 +293,7 @@ class Schema {
 }
 
 const ArraySchema = new Schema()
+ArraySchema.name = 'array Schema '
 ArraySchema.type = 'array'
 
 function cleanup(outputString){

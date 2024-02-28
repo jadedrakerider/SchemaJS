@@ -11,6 +11,11 @@ import {
     have,
     is
 } from './ChaiFunctions/chaiFunctions.mjs'
+import {
+    compileKeywords,
+    SchemaTypeValue,
+    SchemaTypeProperty
+} from './testFunctions.mjs'
 import { expect } from 'chai'
 import Ajv from 'ajv'
 
@@ -166,65 +171,35 @@ describe('AJV setup', () => {
     count()
 
     describe('Schema mjs', () => {
-            describe(`SchemaType is {type: 'object'} by default.`, () => {
-                const schemaType = new SchemaType().v()
-        
-                SchemaTypeValue(schemaType, {type:'object'})
-                SchemaTypeValue(Schema.object, {type:'object'})
-            })
-        
-            describe(`Schema constructor`, () => {
-                const schema = new Schema()
-                const keys = Object.keys(schema)
-                const properties = ['type','required','properties','additionalProperties']
-        
-                for( let i = 0 ; i < keys.length ; i++){
-                    valueMatch(keys[i],properties[i])
-                }
-            })
-        
-            describe(`Schema type properties are correct`, () => {
-                const arraySchema = ArraySchema
-                const generic = new Schema()
-        
-                SchemaTypeProperty(arraySchema, Schema.array.type)
-                SchemaTypeProperty(arraySchema, Schema.number.type, false)
-                SchemaTypeProperty(generic, Schema.object.type)
-                SchemaTypeProperty(generic, Schema.boolean.type, false)
-            })
+        describe(`SchemaType is {type: 'object'} by default.`, () => {
+            const schemaType = new SchemaType().v()
+    
+            SchemaTypeValue(schemaType, {type:'object'})
+            SchemaTypeValue(Schema.object, {type:'object'})
         })
+    
+        describe(`Schema constructor`, () => {
+            const schema = new Schema()
+            const keys = Object.keys(schema)
+            const properties = ['type','name','required','properties','additionalProperties']
+    
+            for( let i = 0 ; i < keys.length ; i++){
+                valueMatch(keys[i],properties[i])
+            }
+        })
+    
+        describe(`Schema type properties are correct`, () => {
+            const arraySchema = ArraySchema
+            const generic = new Schema()
+    
+            SchemaTypeProperty(arraySchema, Schema.array.type)
+            SchemaTypeProperty(arraySchema, Schema.number.type, false)
+            SchemaTypeProperty(generic, Schema.object.type)
+            SchemaTypeProperty(generic, Schema.boolean.type, false)
+        })
+    })
+
 })
-
-function compileKeywords(ajv, schema){
-    const schemaKeywords = new Set(schema.keywords())
-
-    schemaKeywords.forEach(term => {
-        ajv.addKeyword(term)
-    })
-}
-
-function SchemaTypeValue(SchemaType, obj, bool=true){
-    let result = {
-        key: Object.keys(obj)[0],
-        value: Object.values(obj)[0]
-    }
-
-    it(`${getCounter()} Schematype ${is(bool)} {${result.key}: '${result.value}'}`, () => {
-        bool
-            ? expect(SchemaType).to.eql(obj)
-            : expect(SchemaType).to.not.eql(obj)
-    })
-    count()
-}
-
-function SchemaTypeProperty(schema, type, bool=true){
-    it(`${getCounter()} ${schema.name}Schema ${have(bool)} type: '${type}'`, () => {
-        bool
-            ? expect(schema.type).to.eql(type)
-            : expect(schema.type).to.not.eql(type)
-    })
-    count()
-}
 
 /*
 describe('SUMMARY', () => {
