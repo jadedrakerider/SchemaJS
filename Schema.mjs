@@ -279,9 +279,9 @@ class Schema {
     keywords() {
         let result = new Set(["name"]); // name is throwing off ajv trying again ...
 
-        // Object.keys(this).forEach(key => {
-        //     result.push(key)
-        // })
+        Object.keys(this).forEach(key => {
+            result.push(key)
+        })
 
         this.required.forEach((field) => {
             result.add(field);
