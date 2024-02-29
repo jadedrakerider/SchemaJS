@@ -5,11 +5,22 @@ import {
  } from '../Schema.mjs'
 // chaiFunctions.mjs are my personal tests for use with all chai projects
  import {
+    threwError,
+    did,
+    does,
+    have,
+    is,
+    matches,
     getCounter,
     count,
     valueMatch,
-    have,
-    is
+    objectsMatch,
+    throwsError,
+    nullCheck,
+    compileKeywords,
+    SchemaTypeValue,
+    SchemaTypeProperty,
+    schemaCorresponds
 } from './ChaiFunctions/chaiFunctions.mjs'
 import { expect } from 'chai'
 import Ajv from 'ajv'
@@ -31,8 +42,6 @@ describe('AJV setup', () => {
                 required: ['foo'],
                 additionalProperties: false
             }
-
-            const vocabulary = new Set(['foo', 'bar'])
 
             const validate = ajv.compile(schema)
 
@@ -65,8 +74,6 @@ describe('AJV setup', () => {
                 required: ['foo', 'turbo'],
                 additionalProperties: false
             }
-
-            const vocabulary = new Set(['foo', 'bar'])
 
             const validate = ajv.compile(schema)
 
@@ -165,66 +172,45 @@ describe('AJV setup', () => {
     })
     count()
 
-    describe('Schema mjs', () => {
-            describe(`SchemaType is {type: 'object'} by default.`, () => {
-                const schemaType = new SchemaType().v()
-        
-                SchemaTypeValue(schemaType, {type:'object'})
-                SchemaTypeValue(Schema.object, {type:'object'})
-            })
-        
-            describe(`Schema constructor`, () => {
-                const schema = new Schema()
-                const keys = Object.keys(schema)
-                const properties = ['type','required','properties','additionalProperties']
-        
-                for( let i = 0 ; i < keys.length ; i++){
-                    valueMatch(keys[i],properties[i])
-                }
-            })
-        
-            describe(`Schema type properties are correct`, () => {
-                const arraySchema = ArraySchema
-                const generic = new Schema()
-        
-                SchemaTypeProperty(arraySchema, Schema.array.type)
-                SchemaTypeProperty(arraySchema, Schema.number.type, false)
-                SchemaTypeProperty(generic, Schema.object.type)
-                SchemaTypeProperty(generic, Schema.boolean.type, false)
-            })
-        })
 })
 
-function compileKeywords(ajv, schema){
-    const schemaKeywords = new Set(schema.keywords())
+describe('ChaiFunctions', () => {
+    describe('schemaCorresponds', () => {
+        const subject = {foo:'fighters', songs:['Best', 'Of', 'You']}
+        const target = new Schema({foo: Schema.string, songs: Schema.array})
 
-    schemaKeywords.forEach(term => {
-        ajv.addKeyword(term)
+        schemaCorresponds(subject, target)
     })
-}
+})
 
-function SchemaTypeValue(SchemaType, obj, bool=true){
-    let result = {
-        key: Object.keys(obj)[0],
-        value: Object.values(obj)[0]
-    }
+describe('Schema mjs', () => {
+    describe(`SchemaType is {type: 'object'} by default.`, () => {
+        const schemaType = new SchemaType().v()
 
-    it(`${getCounter()} Schematype ${is(bool)} {${result.key}: '${result.value}'}`, () => {
-        bool
-            ? expect(SchemaType).to.eql(obj)
-            : expect(SchemaType).to.not.eql(obj)
+        SchemaTypeValue(schemaType, {type:'object'})
+        SchemaTypeValue(Schema.object, {type:'object'})
     })
-    count()
-}
 
-function SchemaTypeProperty(schema, type, bool=true){
-    it(`${getCounter()} ${schema.name}Schema ${have(bool)} type: '${type}'`, () => {
-        bool
-            ? expect(schema.type).to.eql(type)
-            : expect(schema.type).to.not.eql(type)
+    describe(`Schema constructor`, () => {
+        const schema = new Schema()
+        const keys = Object.keys(schema)
+        const properties = ['type','required','properties','additionalProperties']
+
+        for( let i = 0 ; i < keys.length ; i++){
+            valueMatch(keys[i],properties[i])
+        }
     })
-    count()
-}
+
+    describe(`Schema type properties are correct`, () => {
+        const arraySchema = ArraySchema
+        const generic = new Schema()
+
+        SchemaTypeProperty(arraySchema, Schema.array.type)
+        SchemaTypeProperty(arraySchema, Schema.number.type, false)
+        SchemaTypeProperty(generic, Schema.object.type)
+        SchemaTypeProperty(generic, Schema.boolean.type, false)
+    })
+})
 
 /*
 describe('SUMMARY', () => {
