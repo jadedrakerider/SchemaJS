@@ -156,7 +156,7 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
-        // this.name = 'standard Schema ' // for outputting in typeof in place of 'Object'
+        // this.name = 'standard Schema' // for outputting in typeof in place of 'Object'
         this.required = []
         this.properties = {}
         this.additionalProperties = false;
