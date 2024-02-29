@@ -14,8 +14,13 @@ import {
     getCounter,
     count,
     valueMatch,
+    objectsMatch,
     throwsError,
-    nullCheck
+    nullCheck,
+    compileKeywords,
+    SchemaTypeValue,
+    SchemaTypeProperty,
+    schemaCorresponds
 } from './ChaiFunctions/chaiFunctions.mjs'
 import {
     compileKeywords,
@@ -77,15 +82,15 @@ describe('AJV Verification', () => {
                  */
                 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-                const schema = {
-                    type: 'object',
-                    properties: {
-                        foo: {type: 'integer'},
-                        bar: {type: 'string'}
-                    },
-                    required: ['foo'],
-                    additionalProperties: false
-                }
+            const schema = {
+                type: 'object',
+                properties: {
+                    foo: {type: 'integer'},
+                    bar: {type: 'string'}
+                },
+                required: ['foo'],
+                additionalProperties: false
+            }
 
                 const validate = ajv.compile(schema)
 
@@ -109,71 +114,15 @@ describe('AJV Verification', () => {
                  */
                 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-                const schema = {
-                    type: 'object',
-                    properties: {
-                        foo: {type: 'integer'},
-                        bar: {type: 'string'}
-                    },
-                    required: ['foo'],
-                    additionalProperties: false
-                }
-
-                const validate = ajv.compile(schema)
-
-                const data = {
-                    foo: 1,
-                    bar: ['abc', 'def'] //'abc'
-                }
-
-                const valid = validate(data)
-                expect(valid).to.be.false
+            const schema = {
+                type: 'object',
+                properties: {
+                    foo: {type: 'integer'},
+                    bar: {type: 'string'}
+                },
+                required: ['foo', 'turbo'],
+                additionalProperties: false
             }
-            boilerplate()
-        })
-        count()
-
-        it(getCounter() + `AJV with SchemaTypes`, () => {
-            const failable = () => {
-                const ajv = new Ajv()
-
-                const schema = {
-                    type: 'object',
-                    properties: {
-                        foo: {type: 'integer'},
-                        bar: Schema.string
-                    },
-                    required: ['foo', 'turbo'],
-                    additionalProperties: false
-                }
-
-                const validate = ajv.compile(schema)
-
-                const data = {
-                    foo: 1,
-                    bar: 'abc'
-                }
-
-                const valid = validate(data)
-                expect(valid).to.be.false
-            }
-            failable()
-        })
-        count()
-
-        it(getCounter() + `AJV is failable with SchemaTypes`, () => {
-            const failable = () => {
-                const ajv = new Ajv()
-
-                const schema = {
-                    type: 'object',
-                    properties: {
-                        foo: {type: 'integer'},
-                        bar: Schema.array
-                    },
-                    required: ['foo', 'turbo'],
-                    additionalProperties: false
-                }
 
                 const validate = ajv.compile(schema)
 
@@ -298,27 +247,43 @@ describe('AJV Verification', () => {
         })
         count()
 
-        it(getCounter() + 'Schema evaluation is failable', () => {
-            let valid
-            const ajv = new Ajv()
-            ajv.addKeyword('name')
-            const subject = {
-                jack: 'be quick',
-                jill: [1]
-            }
-            const target = {
-                jack: Schema.string,
-                jill: Schema.string
-            }
-            const schema = new Schema(target)
+})
 
-            compileKeywords(ajv, schema)
+describe('ChaiFunctions', () => {
+    describe('schemaCorresponds', () => {
+        const subject = {foo:'fighters', songs:['Best', 'Of', 'You']}
+        const target = new Schema({foo: Schema.string, songs: Schema.array})
 
-            valid = ajv.validate(schema)
+        schemaCorresponds(subject, target)
+    })
+})
 
-            expect(valid).to.be.false
-        })
-        count()
+describe('Schema mjs', () => {
+    describe(`SchemaType is {type: 'object'} by default.`, () => {
+        const schemaType = new SchemaType().v()
+
+        SchemaTypeValue(schemaType, {type:'object'})
+        SchemaTypeValue(Schema.object, {type:'object'})
+    })
+
+    describe(`Schema constructor`, () => {
+        const schema = new Schema()
+        const keys = Object.keys(schema)
+        const properties = ['type','required','properties','additionalProperties']
+
+        for( let i = 0 ; i < keys.length ; i++){
+            valueMatch(keys[i],properties[i])
+        }
+    })
+
+    describe(`Schema type properties are correct`, () => {
+        const arraySchema = ArraySchema
+        const generic = new Schema()
+
+        SchemaTypeProperty(arraySchema, Schema.array.type)
+        SchemaTypeProperty(arraySchema, Schema.number.type, false)
+        SchemaTypeProperty(generic, Schema.object.type)
+        SchemaTypeProperty(generic, Schema.boolean.type, false)
     })
 })
 

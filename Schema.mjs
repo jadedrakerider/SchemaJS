@@ -152,11 +152,11 @@ class Schema {
          *      an object which holds the SchemaTypes of the SchemaType
          *      class. This is where the expectations of required are
          *      defined.
-         */
-        this.type = "object";
-        this.name = "standard Schema"; // for outputting in typeof in place of 'Object'
-        this.required = [];
-        this.properties = {};
+        */
+        this.type = 'object'
+        // this.name = 'standard Schema' // for outputting in typeof in place of 'Object'
+        this.required = []
+        this.properties = {}
         this.additionalProperties = false;
 
         this.addProfile(obj);
