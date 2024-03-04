@@ -156,7 +156,7 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
-        // this.name = 'standard Schema' // for outputting in typeof in place of 'Object'
+        this.name = 'standard Schema' // for outputting in typeof in place of 'Object'
         this.required = []
         this.properties = {}
         this.additionalProperties = true;
@@ -280,7 +280,11 @@ class Schema {
     keywords(){
         let result = new Set([]) //'name']) // name is throwing off ajv
 
-        this.required.forEach(field => {
+        let properties =  ['name']
+        properties.forEach(field => {
+            result.add(field)
+        })
+        Object.keys(this.properties).forEach(field => {
             result.add(field)
         })
 
