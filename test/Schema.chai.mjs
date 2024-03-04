@@ -58,14 +58,14 @@ describe('Schema mjs', () => {
     describe('Schema type properties are correct', () => {
         const arraySchema = ArraySchema
         const generic = new Schema()
-        const array = Schema.array.type
-        const object = Schema.object.type
-        const boolean = Schema.boolean.type
+        const array = Schema.array
+        const object = Schema.object
+        const boolean = Schema.boolean
 
-        SchemaTypeProperty(arraySchema, array)
-        SchemaTypeProperty(arraySchema, object, false)
-        SchemaTypeProperty(generic, object)
-        SchemaTypeProperty(generic, boolean, false)
+        SchemaTypeProperty(arraySchema, 'ArraySchema', array)
+        SchemaTypeProperty(arraySchema, 'ArraySchema', object, false)
+        SchemaTypeProperty(generic, 'Schema', object)
+        SchemaTypeProperty(generic, 'Schema', boolean, false)
     })
 })
 
@@ -104,21 +104,21 @@ describe('AJV Verification', () => {
         count()
 
         it(getCounter() + 'AJV boilerplate is failable', () => {
-            const boilerplate = () => {
+            const failable = () => {
                 /**
                  * Put inside an anonymous function so that the scope is limited.
                  */
                 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-            const schema = {
-                type: 'object',
-                properties: {
-                    foo: {type: 'integer'},
-                    bar: {type: 'string'}
-                },
-                required: ['foo', 'turbo'],
-                additionalProperties: false
-            }
+                const schema = {
+                    type: 'object',
+                    properties: {
+                        foo: {type: 'integer'},
+                        bar: {type: 'string'}
+                    },
+                    required: ['foo', 'turbo'],
+                    additionalProperties: false
+                }
 
                 const validate = ajv.compile(schema)
 
@@ -243,46 +243,46 @@ describe('AJV Verification', () => {
         })
         count()
 
-})
+    })
 
-describe('ChaiFunctions', () => {
-    describe('schemaCorresponds', () => {
-        const subject = {foo:'fighters', songs:['Best', 'Of', 'You']}
-        const target = new Schema({foo: Schema.string, songs: Schema.array})
+    describe('ChaiFunctions', () => {
+        describe('schemaCorresponds', () => {
+            const subject = {foo:'fighters', songs:['Best', 'Of', 'You']}
+            const target = new Schema({foo: Schema.string, songs: Schema.array})
 
-        schemaCorresponds(subject, target)
+            schemaCorresponds(subject, 'Foo Fighters', target)
+        })
+    })
+
+    describe('Schema mjs', () => {
+        describe(`SchemaType is {type: 'object'} by default.`, () => {
+            const schemaType = new SchemaType().v()
+
+            SchemaTypeValue(schemaType, {type:'object'})
+            SchemaTypeValue(Schema.object, {type:'object'})
+        })
+
+        describe(`Schema constructor`, () => {
+            const schema = new Schema()
+            const keys = Object.keys(schema)
+            const properties = ['type','name','required','properties','additionalProperties']
+
+            for( let i = 0 ; i < keys.length ; i++){
+                valueMatch(keys[i],properties[i])
+            }
+        })
+
+        describe(`Schema type properties are correct`, () => {
+            const arraySchema = ArraySchema
+            const generic = new Schema()
+
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.array)
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.number, false)
+            SchemaTypeProperty(generic, 'Schema', Schema.object)
+            SchemaTypeProperty(generic, 'Schema', Schema.boolean, false)
+        })
     })
 })
-
-describe('Schema mjs', () => {
-    describe(`SchemaType is {type: 'object'} by default.`, () => {
-        const schemaType = new SchemaType().v()
-
-        SchemaTypeValue(schemaType, {type:'object'})
-        SchemaTypeValue(Schema.object, {type:'object'})
-    })
-
-    describe(`Schema constructor`, () => {
-        const schema = new Schema()
-        const keys = Object.keys(schema)
-        const properties = ['type','required','properties','additionalProperties']
-
-        for( let i = 0 ; i < keys.length ; i++){
-            valueMatch(keys[i],properties[i])
-        }
-    })
-
-    describe(`Schema type properties are correct`, () => {
-        const arraySchema = ArraySchema
-        const generic = new Schema()
-
-        SchemaTypeProperty(arraySchema, Schema.array.type)
-        SchemaTypeProperty(arraySchema, Schema.number.type, false)
-        SchemaTypeProperty(generic, Schema.object.type)
-        SchemaTypeProperty(generic, Schema.boolean.type, false)
-    })
-})
-
 /*
 describe('SUMMARY', () => {
     describe('SUMMARY', () => {
