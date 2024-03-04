@@ -21,12 +21,8 @@ import {
     SchemaTypeValue,
     SchemaTypeProperty,
     schemaCorresponds
-} from './ChaiFunctions/chaiFunctions.mjs'
-import {
-    compileKeywords,
-    SchemaTypeValue,
-    SchemaTypeProperty
-} from './SchemaTests.mjs'
+} from './ChaiFunctions/Chai.mjs'
+
 import { expect } from 'chai'
 import Ajv from 'ajv'
 
