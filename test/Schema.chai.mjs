@@ -58,14 +58,14 @@ describe('Schema mjs', () => {
     describe('Schema type properties are correct', () => {
         const arraySchema = ArraySchema
         const generic = new Schema()
-        const array = Schema.array.type
-        const object = Schema.object.type
-        const boolean = Schema.boolean.type
+        const array = Schema.array
+        const object = Schema.object
+        const boolean = Schema.boolean
 
-        SchemaTypeProperty(arraySchema, array)
-        SchemaTypeProperty(arraySchema, object, false)
-        SchemaTypeProperty(generic, object)
-        SchemaTypeProperty(generic, boolean, false)
+        SchemaTypeProperty(arraySchema, 'ArraySchema', array)
+        SchemaTypeProperty(arraySchema, 'ArraySchema', object, false)
+        SchemaTypeProperty(generic, 'Schema', object)
+        SchemaTypeProperty(generic, 'Schema', boolean, false)
     })
 })
 
@@ -276,10 +276,10 @@ describe('AJV Verification', () => {
             const arraySchema = ArraySchema
             const generic = new Schema()
 
-            SchemaTypeProperty(arraySchema, Schema.array.type)
-            SchemaTypeProperty(arraySchema, Schema.number.type, false)
-            SchemaTypeProperty(generic, Schema.object.type)
-            SchemaTypeProperty(generic, Schema.boolean.type, false)
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.array)
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.number, false)
+            SchemaTypeProperty(generic, 'Schema', Schema.object)
+            SchemaTypeProperty(generic, 'Schema', Schema.boolean, false)
         })
     })
 })
