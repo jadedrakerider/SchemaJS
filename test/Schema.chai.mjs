@@ -104,21 +104,21 @@ describe('AJV Verification', () => {
         count()
 
         it(getCounter() + 'AJV boilerplate is failable', () => {
-            const boilerplate = () => {
+            const failable = () => {
                 /**
                  * Put inside an anonymous function so that the scope is limited.
                  */
                 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-            const schema = {
-                type: 'object',
-                properties: {
-                    foo: {type: 'integer'},
-                    bar: {type: 'string'}
-                },
-                required: ['foo', 'turbo'],
-                additionalProperties: false
-            }
+                const schema = {
+                    type: 'object',
+                    properties: {
+                        foo: {type: 'integer'},
+                        bar: {type: 'string'}
+                    },
+                    required: ['foo', 'turbo'],
+                    additionalProperties: false
+                }
 
                 const validate = ajv.compile(schema)
 
@@ -250,7 +250,7 @@ describe('AJV Verification', () => {
             const subject = {foo:'fighters', songs:['Best', 'Of', 'You']}
             const target = new Schema({foo: Schema.string, songs: Schema.array})
 
-            schemaCorresponds(subject, target)
+            schemaCorresponds(subject, 'Foo Fighters', target)
         })
     })
 
@@ -265,7 +265,7 @@ describe('AJV Verification', () => {
         describe(`Schema constructor`, () => {
             const schema = new Schema()
             const keys = Object.keys(schema)
-            const properties = ['type','required','properties','additionalProperties']
+            const properties = ['type','name','required','properties','additionalProperties']
 
             for( let i = 0 ; i < keys.length ; i++){
                 valueMatch(keys[i],properties[i])
