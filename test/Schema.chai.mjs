@@ -28,13 +28,13 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        valueMatch(Schema.array, {type: 'array'})
-        valueMatch(Schema.boolean, {type: 'boolean'})
-        valueMatch(Schema.integer, {type: 'integer'})
-        valueMatch(Schema.object, {type: 'object'})
-        valueMatch(Schema.nulled, {type: 'null'})
-        valueMatch(Schema.string, {type: 'string'})
-        valueMatch(Schema.number, {type: 'number'})
+        valueMatch(Schema.array.v(), {type: 'array'})
+        valueMatch(Schema.boolean.v(), {type: 'boolean'})
+        valueMatch(Schema.integer.v(), {type: 'integer'})
+        valueMatch(Schema.object.v(), {type: 'object'})
+        valueMatch(Schema.nulled.v(), {type: 'null'})
+        valueMatch(Schema.string.v(), {type: 'string'})
+        valueMatch(Schema.number.v(), {type: 'number'})
     })
 
     describe(`SchemaType is {type: 'object'} by default.`, () => {
@@ -42,7 +42,7 @@ describe('Schema mjs', () => {
         const schemaT = schemaType.v()
 
         SchemaTypeValue(schemaT, {type:'object'})
-        SchemaTypeValue(Schema.object, {type:'object'})
+        SchemaTypeValue(Schema.object.v(), {type:'object'})
     })
 
     describe('Schema constructor', () => {
@@ -62,6 +62,7 @@ describe('Schema mjs', () => {
         const object = Schema.object
         const boolean = Schema.boolean
 
+        console.log('Schema.array.toString()', Schema.array.toString())
         SchemaTypeProperty(arraySchema, 'ArraySchema', array)
         SchemaTypeProperty(arraySchema, 'ArraySchema', object, false)
         SchemaTypeProperty(generic, 'Schema', object)
@@ -141,8 +142,8 @@ describe('AJV Verification', () => {
                 const schema = {
                     type: 'object',
                     properties: {
-                        user_id: Schema.number,
-                        access_token: Schema.string
+                        user_id: Schema.number.v(),
+                        access_token: Schema.string.v()
                     },
                     required: ['user_id', 'access_token'],
                     additionalProperties: false
@@ -259,7 +260,7 @@ describe('AJV Verification', () => {
             const schemaType = new SchemaType().v()
 
             SchemaTypeValue(schemaType, {type:'object'})
-            SchemaTypeValue(Schema.object, {type:'object'})
+            SchemaTypeValue(Schema.object.v(), {type:'object'})
         })
 
         describe(`Schema constructor`, () => {
