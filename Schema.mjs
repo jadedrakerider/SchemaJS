@@ -33,7 +33,7 @@ class SchemaType extends ExtEnum {
     }
 
     toString(){
-        return `${JSON.stringify(this.valueOf(true))}`
+        return 'SchemaType'
     }
 }
 
@@ -131,13 +131,13 @@ class Schema {
      *      an object.
      */
 
-    static array = array.v();
-    static boolean = boolean.v();
-    static integer = integer.v();
-    static number = number.v();
-    static nulled = nulled.v();
-    static object = object.v();
-    static string = string.v();
+    static array = array;
+    static boolean = boolean;
+    static integer = integer;
+    static number = number;
+    static nulled = nulled;
+    static object = object;
+    static string = string;
 
     constructor(obj = null) {
         /**
