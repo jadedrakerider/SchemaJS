@@ -187,7 +187,7 @@ class Schema {
         }
 
         for(const [key, value] of Object.entries(profile)){
-            this.add(key, value)
+            this.add(key, value.valueOf())
         }
 
         // Object.keys(profile).forEach((key) => {
