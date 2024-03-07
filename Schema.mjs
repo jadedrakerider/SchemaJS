@@ -138,6 +138,7 @@ class Schema {
     static nulled = nulled;
     static object = object;
     static string = string;
+    static name = 'standard Schema' // for outputting in typeof in place of 'Object'
 
     constructor(obj = null) {
         /**
@@ -154,7 +155,6 @@ class Schema {
          *      defined.
         */
         this.type = 'object'
-        this.name = 'standard Schema' // for outputting in typeof in place of 'Object'
         this.required = []
         this.properties = {}
         this.additionalProperties = true;
