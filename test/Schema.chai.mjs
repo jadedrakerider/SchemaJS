@@ -48,11 +48,13 @@ describe('Schema mjs', () => {
     describe('Schema constructor', () => {
         const schema = new Schema()
         const keys = Object.keys(schema)
-        const properties = ['type','name','required','properties','additionalProperties']
+        const properties = ['type','required','properties','additionalProperties']
 
         for( let i = 0 ; i < keys.length ; i++){
             valueMatch(keys[i],properties[i])
         }
+
+        valueMatch(Schema.name, 'standard Schema')
     })
 
     describe('Schema type properties are correct', () => {
@@ -266,11 +268,13 @@ describe('AJV Verification', () => {
         describe(`Schema constructor`, () => {
             const schema = new Schema()
             const keys = Object.keys(schema)
-            const properties = ['type','name','required','properties','additionalProperties']
+            const properties = ['type','required','properties','additionalProperties']
 
             for( let i = 0 ; i < keys.length ; i++){
                 valueMatch(keys[i],properties[i])
             }
+
+            valueMatch(Schema.name, 'standard Schema')
         })
 
         describe(`Schema type properties are correct`, () => {
