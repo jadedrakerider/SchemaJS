@@ -60,9 +60,9 @@ describe('Schema mjs', () => {
     describe('Schema type properties are correct', () => {
         const arraySchema = ArraySchema
         const generic = new Schema()
-        const array = Schema.array
-        const object = Schema.object
-        const boolean = Schema.boolean
+        const array = Schema.array.valueOf()
+        const object = Schema.object.valueOf()
+        const boolean = Schema.boolean.valueOf()
 
         console.log('Schema.array.toString()', Schema.array.toString())
         SchemaTypeProperty(arraySchema, 'ArraySchema', array)
