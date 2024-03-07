@@ -281,10 +281,10 @@ describe('AJV Verification', () => {
             const arraySchema = ArraySchema
             const generic = new Schema()
 
-            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.array)
-            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.number, false)
-            SchemaTypeProperty(generic, 'Schema', Schema.object)
-            SchemaTypeProperty(generic, 'Schema', Schema.boolean, false)
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.array.valueOf())
+            SchemaTypeProperty(arraySchema, 'ArraySchema', Schema.number.valueOf(), false)
+            SchemaTypeProperty(generic, 'Schema', Schema.object.valueOf())
+            SchemaTypeProperty(generic, 'Schema', Schema.boolean.valueOf(), false)
         })
     })
 })

@@ -186,9 +186,13 @@ class Schema {
             return;
         }
 
-        Object.keys(profile).forEach((key) => {
-            this.add(key, profile[key]);
-        });
+        for(const [key, value] of Object.entries(profile)){
+            this.add(key, value)
+        }
+
+        // Object.keys(profile).forEach((key) => {
+        //     this.add(key, profile[key]);
+        // });
     }
 
     toString(pretty = false) {
