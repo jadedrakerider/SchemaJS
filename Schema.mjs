@@ -138,7 +138,7 @@ class Schema {
     static nulled = nulled;
     static object = object;
     static string = string;
-    static name = 'standard Schema' // for outputting in typeof in place of 'Object'
+    static name = 'standard Schema' // for outputting in typeof in place of '[Object Object]'
 
     constructor(obj = null) {
         /**
