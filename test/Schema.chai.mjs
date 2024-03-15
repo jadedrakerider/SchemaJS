@@ -5,24 +5,24 @@ import {
  } from '../Schema.mjs'
 // chaiFunctions.mjs are my personal tests for use with all chai projects
  import {
-    threwError,
+    throwError,
     did,
     does,
     have,
     is,
     matches,
     getCounter,
-    count,
     valueMatch,
     objectsMatch,
     throwsError,
-    nullCheck,
+    nullCheck
+} from './ChaiFunctions/Chai.mjs'
+import {
     compileKeywords,
     SchemaTypeValue,
     SchemaTypeProperty,
     schemaCorresponds
-} from './ChaiFunctions/Chai.mjs'
-
+} from './ChaiFunctions/SchemaJS.ext.mjs'
 import { expect } from 'chai'
 import Ajv from 'ajv'
 
@@ -104,7 +104,6 @@ describe('AJV Verification', () => {
             }
             boilerplate()
         })
-        count()
 
         it(getCounter() + 'AJV boilerplate is failable', () => {
             const failable = () => {
@@ -135,7 +134,7 @@ describe('AJV Verification', () => {
             }
             failable()            
         })
-        count()
+        
 
         it(getCounter() + `AJV boilerplate with session data`, () => {
             const boilerplate = () => {
@@ -164,7 +163,7 @@ describe('AJV Verification', () => {
             }
             boilerplate()
         })
-        count()
+        
 
         it(getCounter() + `AJV boilerplate with session data is failable`, () => {
             const boilerplate = () => {
@@ -192,7 +191,7 @@ describe('AJV Verification', () => {
             }
             boilerplate()
         })
-        count()
+        
     })
 
     describe('AJV evaluates Schema class successfully',() => {
@@ -221,7 +220,7 @@ describe('AJV Verification', () => {
 
             expect(valid).to.be.true
         })
-        count()
+        
 
         it(getCounter() + `addKeywords function works`, () => {
             const ajv = new Ajv()        
@@ -244,7 +243,7 @@ describe('AJV Verification', () => {
 
             expect(valid).to.be.true
         })
-        count()
+        
 
     })
 
@@ -293,7 +292,7 @@ describe('SUMMARY', () => {
     describe('SUMMARY', () => {
         it(`Test ${getCounter()}: SUMMARY`, () => {
 
-        count()
+        
         })
     })
 })
