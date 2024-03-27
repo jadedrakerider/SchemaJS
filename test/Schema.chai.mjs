@@ -81,11 +81,11 @@ describe('Schema mjs', () => {
 
         const subject = Schema.parse(bowie)
 
-        const target = {
+        const target = new Schema({
             title: Schema.string,
             year: Schema.number,
             awesome: Schema.boolean
-        }
+        })
 
         objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')        
     })
