@@ -8,9 +8,8 @@
  *      so now you don't have to. IN ES6!!!
  */
 
-"use strict";
-import { Type } from "ajv/dist/compile/util";
-import { ExtEnum } from "./ENUMJS/ENUM.mjs";
+"use strict"
+import { ExtEnum } from "./ENUMJS/ENUM.mjs"
 
 const types = [
     { OBJECT: { type: "object" } },
@@ -20,7 +19,7 @@ const types = [
     { NUMBER: { type: "number" } },
     { NULL: { type: "null" } },
     { STRING: { type: "string" } },
-];
+]
 
 class SchemaType extends ExtEnum {
     /**
@@ -30,11 +29,11 @@ class SchemaType extends ExtEnum {
      */
 
     constructor() {
-        super(types);
+        super(types)
     }
 
     toString() {
-        return "SchemaType";
+        return "SchemaType"
     }
 }
 
@@ -44,8 +43,8 @@ class ArrayType extends SchemaType {
      */
 
     constructor() {
-        super();
-        this.select("ARRAY");
+        super()
+        this.select("ARRAY")
     }
 }
 
@@ -54,8 +53,8 @@ class BooleanType extends SchemaType {
      * @class
      */
     constructor() {
-        super();
-        this.select("BOOLEAN");
+        super()
+        this.select("BOOLEAN")
     }
 }
 
@@ -64,8 +63,8 @@ class IntegerType extends SchemaType {
      * @class
      */
     constructor() {
-        super();
-        this.select("INTEGER");
+        super()
+        this.select("INTEGER")
     }
 }
 
@@ -77,15 +76,15 @@ class NumberType extends SchemaType {
      *      corresponding to a number.
      */
     constructor() {
-        super();
-        this.select("NUMBER");
+        super()
+        this.select("NUMBER")
     }
 }
 
 class NulledType extends SchemaType {
     constructor() {
-        super();
-        this.select("NULL");
+        super()
+        this.select("NULL")
     }
 }
 
@@ -97,8 +96,8 @@ class ObjectType extends SchemaType {
      *      corresponding to an Object.
      */
     constructor() {
-        super();
-        this.select("OBJECT");
+        super()
+        this.select("OBJECT")
     }
 }
 
@@ -111,18 +110,18 @@ class StringType extends SchemaType {
      */
 
     constructor() {
-        super();
-        this.select("STRING");
+        super()
+        this.select("STRING")
     }
 }
 
-const array = new ArrayType();
-const boolean = new BooleanType();
-const integer = new IntegerType();
-const number = new NumberType();
-const nulled = new NulledType();
-const object = new ObjectType();
-const string = new StringType();
+const array = new ArrayType()
+const boolean = new BooleanType()
+const integer = new IntegerType()
+const number = new NumberType()
+const nulled = new NulledType()
+const object = new ObjectType()
+const string = new StringType()
 
 class Schema {
     /**
@@ -132,14 +131,14 @@ class Schema {
      *      an object.
      */
 
-    static array = array;
-    static boolean = boolean;
-    static integer = integer;
-    static number = number;
-    static nulled = nulled;
-    static object = object;
-    static string = string;
-    static name = "standard Schema"; // for outputting in typeof in place of '[Object Object]'
+    static array = array
+    static boolean = boolean
+    static integer = integer
+    static number = number
+    static nulled = nulled
+    static object = object
+    static string = string
+    static name = "standard Schema" // for outputting in typeof in place of '[Object Object]'
 
     constructor(obj = null) {
         /**
@@ -155,12 +154,12 @@ class Schema {
          *      class. This is where the expectations of required are
          *      defined.
          */
-        this.type = "object";
-        this.required = [];
-        this.properties = {};
-        this.additionalProperties = true;
+        this.type = "object"
+        this.required = []
+        this.properties = {}
+        this.additionalProperties = true
 
-        this.addProfile(obj);
+        this.addProfile(obj)
     }
 
     add(str, type) {
@@ -171,8 +170,8 @@ class Schema {
          * @summary
          *      Adds the name of a field and its type to the schema.
          */
-        this.required.push(str);
-        this.properties[str] = { type: type.type };
+        this.required.push(str)
+        this.properties[str] = { type: type.type }
     }
 
     addProfile(profile = null) {
@@ -184,16 +183,16 @@ class Schema {
          *      object and assigns them where they need to be.
          */
         if (profile === null) {
-            return;
+            return
         }
 
         for (const [key, value] of Object.entries(profile)) {
-            this.add(key, value.valueOf());
+            this.add(key, value.valueOf())
         }
 
         // Object.keys(profile).forEach((key) => {
-        //     this.add(key, profile[key]);
-        // });
+        //     this.add(key, profile[key])
+        // })
     }
 
     toString(pretty = false) {
@@ -203,73 +202,73 @@ class Schema {
          * @returns {string}
          *      Returns a string in either a human-readable format (if pretty == true)
          */
-        let outputString = "";
-        const schema = "Schema {";
-        const required = `'required': [`;
-        const closeBracket = "],";
-        const properties = `'properties': {`;
-        const closeBrace = "}";
-        const ntab = "\n    ";
-        const tab = "    ";
+        let outputString = ""
+        const schema = "Schema {"
+        const required = `'required': [`
+        const closeBracket = "],"
+        const properties = `'properties': {`
+        const closeBrace = "}"
+        const ntab = "\n    "
+        const tab = "    "
 
-        pretty ? (outputString += schema + ntab) : (outputString += schema);
+        pretty ? (outputString += schema + ntab) : (outputString += schema)
 
         pretty
             ? (outputString += `'type': '${this.type}', ` + ntab)
-            : (outputString += `'type': '${this.type}', `);
+            : (outputString += `'type': '${this.type}', `)
 
-        pretty ? (outputString += ntab + required) : (outputString += required);
+        pretty ? (outputString += ntab + required) : (outputString += required)
 
         if (pretty) {
-            outputString += ntab;
+            outputString += ntab
             this.required.forEach((element) => {
-                outputString += tab + `'${element}',` + ntab;
-            });
+                outputString += tab + `'${element}',` + ntab
+            })
         } else {
             this.required.forEach((element) => {
-                outputString += `'${element}',`;
-            });
+                outputString += `'${element}',`
+            })
         }
 
         pretty
             ? (outputString += closeBracket + ntab)
-            : (outputString += closeBracket);
+            : (outputString += closeBracket)
 
         pretty
             ? (outputString += properties + ntab)
-            : (outputString += properties);
+            : (outputString += properties)
 
         if (pretty) {
             for (const [key, value] of Object.entries(this.properties)) {
-                outputString += ntab + `'${key}': '${value}',` + ntab;
+                outputString += ntab + `'${key}': '${value}',` + ntab
             }
         } else {
             for (const [key, value] of Object.entries(this.properties)) {
-                outputString += `'${key}': '${value}',`;
+                outputString += `'${key}': '${value}',`
             }
         }
 
         pretty
             ? (outputString += closeBrace + ntab)
-            : (outputString += closeBrace);
+            : (outputString += closeBrace)
 
-        outputString += closeBrace;
+        outputString += closeBrace
 
-        outputString = cleanup(outputString);
+        outputString = cleanup(outputString)
 
-        return outputString;
+        return outputString
     }
 
     t() {
-        return this.typeOf();
+        return this.typeOf()
     }
 
     typeOf() {
-        return this.type;
+        return this.type
     }
 
     v() {
-        return this.valueOf();
+        return this.valueOf()
     }
 
     valueOf() {
@@ -278,42 +277,47 @@ class Schema {
             type: this.type,
             properties: this.properties,
             additionalProperties: this.additionalProperties,
-        };
+        }
     }
 
     keywords() {
-        let result = new Set([]); //'name']) // name is throwing off ajv
-        let properties = ["name"];
+        let result = new Set([]) //'name']) // name is throwing off ajv
+        let properties = ["name"]
         properties.forEach((field) => {
-            result.add(field);
-        });
+            result.add(field)
+        })
         Object.keys(this.properties).forEach((field) => {
-            result.add(field);
-        });
+            result.add(field)
+        })
 
-        return result;
+        return result
     }
 
     static schemify(obj){
+        obj = Schema.parse(obj)
+        return obj
+    }
+
+    static parse(obj){
     /**
      * @todo write tests
      * @param {object} obj
      *      an object of key-value pairs
-     * @method schemify
+     * @method parse
      *      parses obj and
      * @returns {Schema}
      *      of the first layer of the object
      */
-        let type;
-        const profile = {};
+        let type
+        const profile = {}
 
-        for (const [key, value] of obj) {
-            profile[key] = Schema.schemaTypeOf(value);
+        for (const [key, value] of Object.entries(obj)) {
+            profile[key] = Schema.schemaTypeOf(value)
         }
 
-        const schema = new Schema(profile);
+        const schema = new Schema(profile)
 
-        return schema;
+        return schema
     }
 
     static schemaTypeOf(value) {
@@ -328,34 +332,34 @@ class Schema {
      *      of value
      */
         if (typeof value === "array") {
-            return array;
+            return array
         } else if (typeof value === "boolean") {
-            return boolean;
+            return boolean
         } else if (typeof value === "number") {
-            return number;
+            return number
         } else if (typeof value === "null") {
-            return nulled;
+            return nulled
         } else if (typeof value === "object") {
-            return object;
+            return object
         } else if (typeof value === "string") {
-            return string;
+            return string
         } else if (typeof value === "undefined") {
-            throw new InvalidInputError("Parameter is undefined");
+            throw new InvalidInputError("Parameter is undefined")
         } else {
-            throw new InvalidInputError("Parameter is an unrecognized type");
+            throw new InvalidInputError("Parameter is an unrecognized type")
         }
     }
 }
 
 class InvalidInputError extends TypeError {
     constructor(message) {
-        super(message);
+        super(message)
     }
 }
 
-const ArraySchema = new Schema();
-ArraySchema.name = "array Schema";
-ArraySchema.type = "array";
+const ArraySchema = new Schema()
+ArraySchema.name = "array Schema"
+ArraySchema.type = "array"
 
 function cleanup(outputString) {
     /**
@@ -365,9 +369,9 @@ function cleanup(outputString) {
      * @param outputString
      * @returns a string.
      */
-    outputString = outputString.replaceAll(",]", "]");
-    outputString = outputString.replaceAll(",}", "}");
-    return outputString;
+    outputString = outputString.replaceAll(",]", "]")
+    outputString = outputString.replaceAll(",}", "}")
+    return outputString
 }
 
 function prettify(outputString) {
@@ -376,12 +380,12 @@ function prettify(outputString) {
      * @param {string} outputstring
      * @returns {string}
      */
-    outputString = outputString.replaceAll(",", ",\n");
-    outputString = outputString.replaceAll("{", "{\n    ");
-    outputString = outputString.replaceAll("}", "    }\n");
-    outputString = outputString.replaceAll("[", "[\n    ");
-    outputString = outputString.replaceAll("]", "    ]\n");
-    return outputString;
+    outputString = outputString.replaceAll(",", ",\n")
+    outputString = outputString.replaceAll("{", "{\n    ")
+    outputString = outputString.replaceAll("}", "    }\n")
+    outputString = outputString.replaceAll("[", "[\n    ")
+    outputString = outputString.replaceAll("]", "    ]\n")
+    return outputString
 }
 
-export { SchemaType, Schema, ArraySchema, InvalidInputError };
+export { SchemaType, Schema, ArraySchema, InvalidInputError }

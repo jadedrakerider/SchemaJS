@@ -1,10 +1,11 @@
 import { 
     SchemaType,
     Schema,
-    ArraySchema
- } from '../Schema.mjs'
-// chaiFunctions.mjs are my personal tests for use with all chai projects
- import {
+    ArraySchema,
+    InvalidInputError
+} from '../Schema.mjs'
+import {
+ // chaiFunctions.mjs are my personal tests for use with all chai projects
     throwError,
     did,
     does,
@@ -50,7 +51,7 @@ describe('Schema mjs', () => {
         const keys = Object.keys(schema)
         const properties = ['type','required','properties','additionalProperties']
 
-        for( let i = 0 ; i < keys.length ; i++){
+        for(let i = 0 ; i < keys.length; i++){
             valueMatch(keys[i],properties[i])
         }
 
@@ -69,6 +70,24 @@ describe('Schema mjs', () => {
         SchemaTypeProperty(arraySchema, 'ArraySchema', object, false)
         SchemaTypeProperty(genericSchema, 'Schema', object)
         SchemaTypeProperty(genericSchema, 'Schema', boolean, false)
+    })
+
+    describe('Schema parsing with schemify() and parse()', () => {
+        const bowie = {
+            title: 'Ziggy Stardust',
+            year: 1972,
+            awesome: true
+        }
+
+        const subject = Schema.parse(bowie)
+
+        const target = {
+            title: Schema.string,
+            year: Schema.number,
+            awesome: Schema.boolean
+        }
+
+        objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')        
     })
 })
 
@@ -199,8 +218,8 @@ describe('AJV Verification', () => {
             const ajv = new Ajv()
             const keywords = ['user_id', 'access_token', 'name']
             keywords.forEach(keyword => {
-                ajv.addKeyword(keyword);
-            });
+                ajv.addKeyword(keyword)
+            })
 
             const subject = { // Data, the subject
                 user_id: 0,
@@ -269,7 +288,7 @@ describe('AJV Verification', () => {
             const keys = Object.keys(schema)
             const properties = ['type','required','properties','additionalProperties']
 
-            for( let i = 0 ; i < keys.length ; i++){
+            for(let i = 0; i < keys.length; i++){
                 valueMatch(keys[i],properties[i])
             }
 
