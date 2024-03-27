@@ -87,7 +87,9 @@ describe('Schema mjs', () => {
             awesome: Schema.boolean
         })
 
-        objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')        
+        objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
+        
+        console.log('parsed object:', subject)
     })
 })
 
