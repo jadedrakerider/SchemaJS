@@ -89,7 +89,7 @@ describe('Schema mjs', () => {
 
         objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
         
-        console.log('parsed object:', subject, '\ntarget:', target)
+        console.log('parsed subject:', subject, '\ntarget:', target)
     })
 })
 
