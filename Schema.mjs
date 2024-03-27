@@ -9,6 +9,7 @@
  */
 
 "use strict";
+import { Type } from "ajv/dist/compile/util";
 import { ExtEnum } from "./ENUMJS/ENUM.mjs";
 
 const types = [
@@ -32,8 +33,8 @@ class SchemaType extends ExtEnum {
         super(types);
     }
 
-    toString(){
-        return 'SchemaType'
+    toString() {
+        return "SchemaType";
     }
 }
 
@@ -138,7 +139,7 @@ class Schema {
     static nulled = nulled;
     static object = object;
     static string = string;
-    static name = 'standard Schema' // for outputting in typeof in place of '[Object Object]'
+    static name = "standard Schema"; // for outputting in typeof in place of '[Object Object]'
 
     constructor(obj = null) {
         /**
@@ -153,10 +154,10 @@ class Schema {
          *      an object which holds the SchemaTypes of the SchemaType
          *      class. This is where the expectations of required are
          *      defined.
-        */
-        this.type = 'object'
-        this.required = []
-        this.properties = {}
+         */
+        this.type = "object";
+        this.required = [];
+        this.properties = {};
         this.additionalProperties = true;
 
         this.addProfile(obj);
@@ -186,8 +187,8 @@ class Schema {
             return;
         }
 
-        for(const [key, value] of Object.entries(profile)){
-            this.add(key, value.valueOf())
+        for (const [key, value] of Object.entries(profile)) {
+            this.add(key, value.valueOf());
         }
 
         // Object.keys(profile).forEach((key) => {
@@ -280,17 +281,75 @@ class Schema {
         };
     }
 
-    keywords(){
-        let result = new Set([]) //'name']) // name is throwing off ajv
-        let properties =  ['name']
-        properties.forEach(field => {
-            result.add(field)
-        })
-        Object.keys(this.properties).forEach(field => {
-            result.add(field)
-        })
+    keywords() {
+        let result = new Set([]); //'name']) // name is throwing off ajv
+        let properties = ["name"];
+        properties.forEach((field) => {
+            result.add(field);
+        });
+        Object.keys(this.properties).forEach((field) => {
+            result.add(field);
+        });
 
         return result;
+    }
+
+    static schemify(obj){
+    /**
+     * @todo write tests
+     * @param {object} obj
+     *      an object of key-value pairs
+     * @method schemify
+     *      parses obj and
+     * @returns {Schema}
+     *      of the first layer of the object
+     */
+        let type;
+        const profile = {};
+
+        for (const [key, value] of obj) {
+            profile[key] = Schema.schemaTypeOf(value);
+        }
+
+        const schema = new Schema(profile);
+
+        return schema;
+    }
+
+    static schemaTypeOf(value) {
+    /**
+     * @todo write tests
+     * @param {*} value
+     *      an object of key-value pairs
+     * @method schemaTypeOf
+     *      takes a value of any type and determines which SchemaType it
+     *          corresponds to, then
+     * @returns {SchemaType}
+     *      of value
+     */
+        if (typeof value === "array") {
+            return array;
+        } else if (typeof value === "boolean") {
+            return boolean;
+        } else if (typeof value === "number") {
+            return number;
+        } else if (typeof value === "null") {
+            return nulled;
+        } else if (typeof value === "object") {
+            return object;
+        } else if (typeof value === "string") {
+            return string;
+        } else if (typeof value === "undefined") {
+            throw new InvalidInputError("Parameter is undefined");
+        } else {
+            throw new InvalidInputError("Parameter is an unrecognized type");
+        }
+    }
+}
+
+class InvalidInputError extends TypeError {
+    constructor(message) {
+        super(message);
     }
 }
 
@@ -325,4 +384,4 @@ function prettify(outputString) {
     return outputString;
 }
 
-export { SchemaType, Schema, ArraySchema };
+export { SchemaType, Schema, ArraySchema, InvalidInputError };
