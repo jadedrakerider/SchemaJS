@@ -237,15 +237,20 @@ class Schema {
     }
 }
 
+class ArraySchema extends Schema {
+    constructor(){
+        super(obj)
+        this.type = 'array'
+        this.name = 'ArraySchema'
+    }
+}
+
 class InvalidInputError extends TypeError {
     constructor(message) {
         super(message)
     }
 }
 
-const ArraySchema = new Schema()
-ArraySchema.name = "array Schema"
-ArraySchema.type = "array"
 
 function cleanup(outputString) {
     /**
@@ -274,4 +279,9 @@ function prettify(outputString) {
     return outputString
 }
 
-export { SchemaType, Schema, ArraySchema, InvalidInputError }
+export {
+    SchemaType,
+    Schema,
+    ArraySchema,
+    InvalidInputError
+}
