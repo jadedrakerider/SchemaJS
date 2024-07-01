@@ -7,122 +7,14 @@
  *      I got tired of re-writing these over and over,
  *      so now you don't have to. IN ES6!!!
  */
-
-"use strict"
-import { ExtEnum } from "./ENUMJS/ENUM.mjs"
 import { SchemaType } from "./SchemaType.mjs"
 
-const types = [
-    { OBJECT: { type: "object" } },
-    { ARRAY: { type: "array" } },
-    { BOOLEAN: { type: "boolean" } },
-    { INTEGER: { type: "integer" } },
-    { NUMBER: { type: "number" } },
-    { NULL: { type: "null" } },
-    { STRING: { type: "string" } },
-]
 
-class SchemaType extends ExtEnum {
-    /**
-     * @class
-     * @summary A Schematype is an Extended Enum corresponding
-     *      to a data type found in a schema.
-     */
 
-    constructor() {
-        super(types)
-    }
 
-    toString() {
-        return "SchemaType"
-    }
-}
 
-class ArrayType extends SchemaType {
-    /**
-     * @class
-     */
 
-    constructor() {
-        super()
-        this.select("ARRAY")
-    }
-}
 
-class BooleanType extends SchemaType {
-    /**
-     * @class
-     */
-    constructor() {
-        super()
-        this.select("BOOLEAN")
-    }
-}
-
-class IntegerType extends SchemaType {
-    /**
-     * @class
-     */
-    constructor() {
-        super()
-        this.select("INTEGER")
-    }
-}
-
-class NumberType extends SchemaType {
-    /**
-     * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to a number.
-     */
-    constructor() {
-        super()
-        this.select("NUMBER")
-    }
-}
-
-class NulledType extends SchemaType {
-    constructor() {
-        super()
-        this.select("NULL")
-    }
-}
-
-class ObjectType extends SchemaType {
-    /**
-     * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to an Object.
-     */
-    constructor() {
-        super()
-        this.select("OBJECT")
-    }
-}
-
-class StringType extends SchemaType {
-    /**
-     * @class
-     * @summary
-     *      ArrayType is a pre-baked type of element found in a schema
-     *      corresponding to a string.
-     */
-
-    constructor() {
-        super()
-        this.select("STRING")
-    }
-}
-
-const array = new ArrayType()
-const boolean = new BooleanType()
-const integer = new IntegerType()
-const number = new NumberType()
-const nulled = new NulledType()
-const object = new ObjectType()
-const string = new StringType()
 
 class Schema {
     /**
@@ -132,13 +24,6 @@ class Schema {
      *      an object.
      */
 
-    static array = array
-    static boolean = boolean
-    static integer = integer
-    static number = number
-    static nulled = nulled
-    static object = object
-    static string = string
     static name = "standard Schema" // for outputting in typeof in place of '[Object Object]'
 
     constructor(obj = null) {
