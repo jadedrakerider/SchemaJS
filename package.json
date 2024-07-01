@@ -4,7 +4,7 @@
     "description": "A schema creation library created and accomodating ES6.",
     "main": "Schema.mjs",
     "scripts": {
-        "start dev": "bash start",
+        "dev-start": "bash DevStart",
         "test": "mocha test --exit"
     },
     "repository": {
