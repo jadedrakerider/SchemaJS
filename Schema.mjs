@@ -10,6 +10,7 @@
 
 "use strict"
 import { ExtEnum } from "./ENUMJS/ENUM.mjs"
+import { SchemaType } from "./SchemaType.mjs"
 
 const types = [
     { OBJECT: { type: "object" } },

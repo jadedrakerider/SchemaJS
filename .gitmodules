@@ -7,3 +7,6 @@
 [submodule "enum"]
 	path = enum
 	url = https://www.github.com/jauntyjocularjay/EnumJS
+[submodule "git"]
+	path = git
+	url = https://github.com/jauntyjocularjay/kwikgit.git
