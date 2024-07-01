@@ -1,0 +1,8 @@
+#!/bin/bash
+
+git submodule add https://github.com/jauntyjocularjay/kwikgit.git git
+git submodule add https://github.com/jauntyjocularjay/chaitests.git module/chaitests
+
+git submodule update --init
+
+npm run test

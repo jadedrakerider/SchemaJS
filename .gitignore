@@ -1,0 +1,8 @@
+.vscode/
+node_modules/
+module/
+
+.DS_store
+.gitmodules
+
+

@@ -1,12 +1,6 @@
-[submodule "sh"]
-	path = sh
-	url = https://github.com/GeorgeSchafer/KwikGit.git
-[submodule "test/ChaiFunctions"]
-	path = test/ChaiFunctions
-	url = https://github.com/GeorgeSchafer/ChaiFunctions.git
-[submodule "enum"]
-	path = enum
-	url = https://www.github.com/jauntyjocularjay/EnumJS
 [submodule "git"]
 	path = git
 	url = https://github.com/jauntyjocularjay/kwikgit.git
+[submodule "module/chaitests"]
+	path = module/chaitests
+	url = https://github.com/jauntyjocularjay/chaitests.git
