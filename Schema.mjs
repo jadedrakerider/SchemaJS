@@ -1,15 +1,4 @@
-/**
- * © 2023 George Schafer george.reflections@gmail.com
- * MIT License
- * GitHub: https://github.com/GeorgeSchafer/SchemaJS
- * @description
- *      SchemaJS is a class for API Schema testing.
- *      I got tired of re-writing these over and over,
- *      so now you don't have to. IN ES6!!!
- */
-
-"use strict"
-import { ExtEnum } from "./ENUMJS/ENUM.mjs"
+import { ExtEnum } from "./module/enum/ENUM.mjs"
 
 const types = [
     { OBJECT: { type: "object" } },
