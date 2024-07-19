@@ -6,15 +6,15 @@ import {
 } from '../Schema.mjs'
 import {
  // chaiFunctions.mjs are my personal tests for use with all chai projects
-    throwError,
+    throwsAnError,
     did,
     does,
     have,
     is,
     matches,
     getCounter,
-    valueMatch,
-    objectsMatch,
+    expectValuesToMatch,
+    expectObjectsAreEqual,
     throwsError,
     nullCheck
 } from '../module/cuppr/Chai.mjs'
@@ -29,13 +29,13 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        valueMatch(Schema.array.v(), {type: 'array'})
-        valueMatch(Schema.boolean.v(), {type: 'boolean'})
-        valueMatch(Schema.integer.v(), {type: 'integer'})
-        valueMatch(Schema.object.v(), {type: 'object'})
-        valueMatch(Schema.nulled.v(), {type: 'null'})
-        valueMatch(Schema.string.v(), {type: 'string'})
-        valueMatch(Schema.number.v(), {type: 'number'})
+        expectValuesToMatch(Schema.array.v(), {type: 'array'})
+        expectValuesToMatch(Schema.boolean.v(), {type: 'boolean'})
+        expectValuesToMatch(Schema.integer.v(), {type: 'integer'})
+        expectValuesToMatch(Schema.object.v(), {type: 'object'})
+        expectValuesToMatch(Schema.nulled.v(), {type: 'null'})
+        expectValuesToMatch(Schema.string.v(), {type: 'string'})
+        expectValuesToMatch(Schema.number.v(), {type: 'number'})
     })
 
     describe(`SchemaType is {type: 'object'} by default.`, () => {
@@ -52,10 +52,10 @@ describe('Schema mjs', () => {
         const properties = ['type','required','properties','additionalProperties']
 
         for(let i = 0 ; i < keys.length; i++){
-            valueMatch(keys[i],properties[i])
+            expectValuesToMatch(keys[i],properties[i])
         }
 
-        valueMatch(Schema.name, 'standard Schema')
+        expectValuesToMatch(Schema.name, 'standard Schema')
     })
 
     describe('Schema type properties are correct', () => {
@@ -87,7 +87,7 @@ describe('Schema mjs', () => {
             awesome: Schema.boolean
         })
 
-        objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
+        expectObjectsAreEqual(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
         
         console.log('parsed subject:', subject, '\ntarget:', target)
     })
@@ -291,10 +291,10 @@ describe('AJV Verification', () => {
             const properties = ['type','required','properties','additionalProperties']
 
             for(let i = 0; i < keys.length; i++){
-                valueMatch(keys[i],properties[i])
+                expectValuesToMatch(keys[i],properties[i])
             }
 
-            valueMatch(Schema.name, 'standard Schema')
+            expectValuesToMatch(Schema.name, 'standard Schema')
         })
 
         describe(`Schema type properties are correct`, () => {
