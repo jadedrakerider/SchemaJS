@@ -1,3 +1,9 @@
 [submodule "git"]
 	path = git
 	url = https://github.com/jauntyjocularjay/kwikgit.git
+[submodule "module/cuppr"]
+	path = module/cuppr
+	url = https://github.com/jauntyjocularjay/cupprchai.git
+[submodule "module/enum"]
+	path = module/enum
+	url = https://github.com/jauntyjocularjay/enumjs.git

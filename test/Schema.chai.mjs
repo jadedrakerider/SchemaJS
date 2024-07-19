@@ -17,13 +17,13 @@ import {
     objectsMatch,
     throwsError,
     nullCheck
-} from './ChaiFunctions/Chai.mjs'
+} from '../module/cuppr/Chai.mjs'
 import {
     compileKeywords,
     SchemaTypeValue,
     SchemaTypeProperty,
     schemaCorresponds
-} from './ChaiFunctions/SchemaJS.ext.mjs'
+} from '../module/cuppr/extensions/SchemaJS.ext.mjs'
 import { expect } from 'chai'
 import Ajv from 'ajv'
 
