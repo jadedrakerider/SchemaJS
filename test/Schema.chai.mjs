@@ -5,12 +5,16 @@ import {
     InvalidInputError
 } from '../Schema.mjs'
 import {
-    getCounter
-} from '../module/verbs/Verbs.mjs'
-import {
  // chaiFunctions.mjs are my personal tests for use with all chai projects
-    valueMatch,
-    objectsMatch,
+    throwsAnError,
+    did,
+    does,
+    have,
+    is,
+    matches,
+    getCounter,
+    expectValuesToMatch,
+    expectObjectsAreEqual,
     throwsError,
     nullCheck
 } from '../module/cuppr/Chai.mjs'
@@ -25,13 +29,13 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        valueMatch(Schema.array.v(), {type: 'array'})
-        valueMatch(Schema.boolean.v(), {type: 'boolean'})
-        valueMatch(Schema.integer.v(), {type: 'integer'})
-        valueMatch(Schema.object.v(), {type: 'object'})
-        valueMatch(Schema.nulled.v(), {type: 'null'})
-        valueMatch(Schema.string.v(), {type: 'string'})
-        valueMatch(Schema.number.v(), {type: 'number'})
+        expectValuesToMatch(Schema.array.v(), {type: 'array'})
+        expectValuesToMatch(Schema.boolean.v(), {type: 'boolean'})
+        expectValuesToMatch(Schema.integer.v(), {type: 'integer'})
+        expectValuesToMatch(Schema.object.v(), {type: 'object'})
+        expectValuesToMatch(Schema.nulled.v(), {type: 'null'})
+        expectValuesToMatch(Schema.string.v(), {type: 'string'})
+        expectValuesToMatch(Schema.number.v(), {type: 'number'})
     })
 
     describe(`SchemaType is {type: 'object'} by default.`, () => {
@@ -51,7 +55,7 @@ describe('Schema mjs', () => {
             valueMatch(keys[i],properties[i])
         }
 
-        valueMatch(Schema.name, 'standard Schema')
+        expectValuesToMatch(Schema.name, 'standard Schema')
     })
 
     describe('Schema type properties are correct', () => {
@@ -290,7 +294,7 @@ describe('AJV Verification', () => {
                 valueMatch(keys[i],properties[i])
             }
 
-            valueMatch(Schema.name, 'standard Schema')
+            expectValuesToMatch(Schema.name, 'standard Schema')
         })
 
         describe(`Schema type properties are correct`, () => {
