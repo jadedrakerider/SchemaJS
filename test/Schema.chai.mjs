@@ -4,11 +4,9 @@ import {
     ArraySchema,
     InvalidInputError
 } from '../Schema.mjs'
+import { getCounter } from '../module/verbs/Verbs.mjs'
 import {
-    getCounter
-} from '../module/verbs/Verbs.mjs'
-import {
- // cuppr/Chai.mjs are my personal tests for use with all chai projects
+ // cupper/Chai.mjs are my personal tests for use with all chai projects
     expectValuesToMatch,
     expectObjectsAreEqual,
     throwsError,
