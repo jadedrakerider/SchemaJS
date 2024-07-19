@@ -1,9 +1,6 @@
 [submodule "ENUMJS"]
 	path = ENUMJS
 	url = https://github.com/GeorgeSchafer/ENUMJS.git
-[submodule "test/ChaiFunctions"]
-	path = test/ChaiFunctions
-	url = https://github.com/GeorgeSchafer/ChaiFunctions.git
 [submodule "git"]
 	path = git
 	url = https://github.com/jauntyjocularjay/kwikgit.git
