@@ -5,14 +5,10 @@ import {
     InvalidInputError
 } from '../Schema.mjs'
 import {
+    getCounter
+} from '../module/verbs/Verbs.mjs'
+import {
  // chaiFunctions.mjs are my personal tests for use with all chai projects
-    throwError,
-    did,
-    does,
-    have,
-    is,
-    matches,
-    getCounter,
     valueMatch,
     objectsMatch,
     throwsError,
