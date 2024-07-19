@@ -52,7 +52,7 @@ describe('Schema mjs', () => {
         const properties = ['type','required','properties','additionalProperties']
 
         for(let i = 0 ; i < keys.length; i++){
-            valueMatch(keys[i],properties[i])
+            expectValuesToMatch(keys[i],properties[i])
         }
 
         expectValuesToMatch(Schema.name, 'standard Schema')
@@ -87,7 +87,7 @@ describe('Schema mjs', () => {
             awesome: Schema.boolean
         })
 
-        objectsMatch(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
+        expectObjectsAreEqual(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
         
         console.log('parsed subject:', subject, '\ntarget:', target)
     })
@@ -291,7 +291,7 @@ describe('AJV Verification', () => {
             const properties = ['type','required','properties','additionalProperties']
 
             for(let i = 0; i < keys.length; i++){
-                valueMatch(keys[i],properties[i])
+                expectValuesToMatch(keys[i],properties[i])
             }
 
             expectValuesToMatch(Schema.name, 'standard Schema')
