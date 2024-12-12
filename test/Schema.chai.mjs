@@ -6,6 +6,7 @@ import {
 } from '../Schema.mjs'
 import {
  // cupper/Chai.mjs are my personal tests for use with all chai projects
+    expects,
     expectValuesToMatch,
     expectObjectsAreEqual,
     throwsError,
@@ -73,7 +74,13 @@ describe('Schema mjs', () => {
             awesome: true
         }
 
+        const metallica = {
+            title: 'Master of Puppets',
+            year: 1985
+        }
+
         const subject = Schema.parse(bowie)
+        const subjectMetallica = Schema.parse(metallica)
 
         const target = new Schema({
             title: Schema.string,
@@ -81,9 +88,10 @@ describe('Schema mjs', () => {
             awesome: Schema.boolean
         })
 
-        expectObjectsAreEqual(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
-        
-        console.log('parsed subject:', subject, '\ntarget:', target)
+        console.log(`Metallica Schema: ${subjectMetallica}`)
+        // 'Bowie - Ziggy Stardust and the Spiders from Mars', subject, 'Ziggy Schema', target
+        expects.object.toEql('Bowie - Ziggy Stardust and the Spiders from Mars', subject, 'album schema', target)
+        expects.object.toEql('Metallica schema', subjectMetallica, 'album schema', target, false)
     })
 })
 
