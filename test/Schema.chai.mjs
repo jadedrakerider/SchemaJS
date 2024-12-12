@@ -23,13 +23,13 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        expectValuesToMatch(Schema.array.v(), {type: 'array'})
-        expectValuesToMatch(Schema.boolean.v(), {type: 'boolean'})
-        expectValuesToMatch(Schema.integer.v(), {type: 'integer'})
-        expectValuesToMatch(Schema.object.v(), {type: 'object'})
-        expectValuesToMatch(Schema.nulled.v(), {type: 'null'})
-        expectValuesToMatch(Schema.string.v(), {type: 'string'})
-        expectValuesToMatch(Schema.number.v(), {type: 'number'})
+        expectValuesToMatch(Schema.array.v().type, 'array')
+        expectValuesToMatch(Schema.boolean.v().type, 'boolean')
+        expectValuesToMatch(Schema.integer.v().type, 'integer')
+        expectValuesToMatch(Schema.object.v().type, 'object')
+        expectValuesToMatch(Schema.nulled.v().type, 'null')
+        expectValuesToMatch(Schema.string.v().type, 'string')
+        expectValuesToMatch(Schema.number.v().type, 'number')
     })
 
     describe(`SchemaType is {type: 'object'} by default.`, () => {
