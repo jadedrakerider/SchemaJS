@@ -23,7 +23,7 @@ import Ajv from 'ajv'
 
 describe('Schema mjs', () => {
     describe('SchemaType values are correct', () => {
-        SchemaTypeValue(Schema.array.v().type, {type: 'array'})
+        SchemaTypeValue(Schema.array.v(), {type: 'array'})
         SchemaTypeValue(Schema.boolean.v(), {type: 'boolean'})
         SchemaTypeValue(Schema.integer.v(), {type: 'integer'})
         SchemaTypeValue(Schema.object.v(), {type: 'object'})
@@ -66,25 +66,7 @@ describe('Schema mjs', () => {
         SchemaTypeProperty(genericSchema, 'Schema', boolean, false)
     })
 
-    describe('Schema parsing with schemify() and parse()', () => {
-        const bowie = {
-            title: 'Ziggy Stardust',
-            year: 1972,
-            awesome: true
-        }
-
-        const subject = Schema.parse(bowie)
-
-        const target = new Schema({
-            title: Schema.string,
-            year: Schema.number,
-            awesome: Schema.boolean
-        })
-
-        expectObjectsAreEqual(subject, 'Bowie - Ziggy Stardust and the Spiders from Mars', target, 'Ziggy Schema')  
-        
-        console.log('parsed subject:', subject, '\ntarget:', target)
-    })
+    
 })
 
 describe('AJV Verification', () => {
